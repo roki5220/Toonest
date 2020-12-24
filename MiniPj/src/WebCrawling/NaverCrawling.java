@@ -1,12 +1,15 @@
 package WebCrawling;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import pj.toon.vo.NaverVo;
 
 public class NaverCrawling {
 	public static void main(String[] args) {
@@ -24,10 +27,18 @@ public class NaverCrawling {
 		Iterator<Element> title = element.select("dt a").iterator();
 		Iterator<Element> writer = element.select("dd.desc").iterator();
 		
+		ArrayList<NaverVo> list = new ArrayList<NaverVo>();
 		while(writer.hasNext()) {
+			NaverVo vo = new NaverVo();
+			vo.setToon_title(title.next().text());
+			vo.setToon_writer(writer.next().text());
+			vo.setG_name("dramaUrl");
 			System.out.println(title.next().text());
 			System.out.println(writer.next().text());
+			list.add(vo);
 		}
-		System.out.println("fff");
 	}
+	
 }
+
+

@@ -2,6 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 <<<<<<< HEAD
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.5"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsoup-1.13.1.jar"/>
+=======
+<<<<<<< HEAD
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.5"/>
@@ -9,5 +15,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ojdbc6_g.jar"/>
 =======
 >>>>>>> branch 'main' of https://github.com/helly128/WebtoonProject.git
+>>>>>>> refs/remotes/origin/main
 	<classpathentry kind="output" path="bin"/>
 </classpath>
