@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /build/
 
 
@@ -127,3 +128,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,eclipse,java
+=======
+/build/
+>>>>>>> branch 'main' of https://github.com/helly128/WebtoonProject.git
