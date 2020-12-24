@@ -24,6 +24,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (min-width: 768px) {
   .display-4 {
     font-size: 3rem;
+    
   }
 }
 
@@ -32,6 +33,7 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 2;
   height: 2.75rem;
   overflow-y: hidden;
+  
 }
 
 .nav-scroller .nav {
@@ -43,6 +45,7 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
+  
 }
 
 .nav-scroller .nav-link {
