@@ -9,36 +9,58 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import pj.toon.vo.NaverVo;
+import pj.toon.vo.WebtoonVo;
 
 public class NaverCrawling {
-	public static void main(String[] args) {
-		String dramaUrl = "https://comic.naver.com/webtoon/genre.nhn?genre=drama";
-		Document doc = null;
-		//Document에 페이지의 전체 소스 저장
+	public ArrayList<WebtoonVo> crawl() {
+		ArrayList<WebtoonVo> list = new ArrayList<WebtoonVo>();
+		setList(list, "daily", 1);
+		setList(list, "drama", 2);
+		setList(list, "action", 3);
+		setList(list, "fantasy", 4);
+		setList(list, "thrill", 5);
+		setList(list, "pure", 6);
+
+		for (WebtoonVo v : list) {
+			System.out.println(v.getToon_title());
+			System.out.println(v.getToon_writer());
+			System.out.println(v.getToon_link());
+			System.out.println(v.getG_no());
+			System.out.println(v.getToon_pic());
+		}
 		
+		return list;
+	}
+
+	public void setList(ArrayList<WebtoonVo> list, String genre, int num) {
+		String url = "https://comic.naver.com/webtoon/genre.nhn?genre=" + genre;
+		Document doc = null;
+		// Document에 페이지의 전체 소스 저장
+		int count = 1;
 		try {
-			doc = Jsoup.connect(dramaUrl).get();
+			doc = Jsoup.connect(url).get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		Elements elements = doc.select("ul.img_list li");
+		Iterator<Element> title = elements.select(".thumb a").iterator();
+		Iterator<Element> link = elements.select("dt a").iterator();
+		Iterator<Element> writer = elements.select("dd.desc").iterator();
+		Iterator<Element> img = elements.select(".thumb img[src$=jpg]").iterator();
 		
-		Elements element = doc.select("ul.img_list");
-		Iterator<Element> title = element.select("dt a").iterator();
-		Iterator<Element> writer = element.select("dd.desc").iterator();
-		
-		ArrayList<NaverVo> list = new ArrayList<NaverVo>();
-		while(writer.hasNext()) {
-			NaverVo vo = new NaverVo();
-			vo.setToon_title(title.next().text());
+		while (title.hasNext() && count <= 20) {
+			WebtoonVo vo = new WebtoonVo();
+			vo.setToon_title(title.next().attr("title"));
 			vo.setToon_writer(writer.next().text());
-			vo.setG_name("dramaUrl");
-			System.out.println(title.next().text());
-			System.out.println(writer.next().text());
+			vo.setToon_link("https://comic.naver.com" + link.next().attr("href"));
+			vo.setToon_pic(img.next().attr("src"));
+			vo.setG_no(num);
+			vo.setToon_site("naver");
 			list.add(vo);
+			count++;
+			//완결여부는 일단 생략.. 모르겠음
 		}
 	}
-	
+
 }
-
-
