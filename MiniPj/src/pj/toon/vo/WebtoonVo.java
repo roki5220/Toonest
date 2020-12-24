@@ -1,12 +1,14 @@
 package pj.toon.vo;
 
+import java.util.ArrayList;
+
 public class WebtoonVo {
 	private String toon_title;
 	private String toon_writer;
-	private int g_no;
 	private String toon_link;
 	private String toon_pic;
 	private String toon_site;
+	private ArrayList<Integer> g_no;	//g_no은 장르 테이블의 column
 	
 	public String getToon_site() {
 		return toon_site;
@@ -38,10 +40,10 @@ public class WebtoonVo {
 	public void setToon_writer(String toon_writer) {
 		this.toon_writer = toon_writer;
 	}
-	public int getG_no() {
+	public ArrayList<Integer> getG_no() {
 		return g_no;
 	}
-	public void setG_no(int g_no) {
+	public void setG_no(ArrayList<Integer> g_no) {
 		this.g_no = g_no;
 	}
 	

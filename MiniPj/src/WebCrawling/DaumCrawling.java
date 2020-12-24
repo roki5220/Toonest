@@ -31,7 +31,7 @@ public class DaumCrawling {
 	}
 
 	public static void setList(ArrayList<WebtoonVo> list, String day) {
-		String url = "http://webtoon.daum.net/#day=" + day + "&tab=day";
+		String url = "http://webtoon.daum.net/#" + day;
 		Document doc = null;
 		// Document에 페이지의 전체 소스 저장
 		try {
@@ -39,12 +39,47 @@ public class DaumCrawling {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		Elements elements = doc.select("ul#dayList1");
-		Iterator<Element> title = elements.select(".tit_wt").iterator();
-		Iterator<Element> writer = elements.select(".txt_info").iterator();
-		Iterator<Element> img = elements.select(".img_thumb").iterator();
-		Iterator<Element> link = elements.select("").iterator();
-		//http://webtoon.daum.net/webtoon/view/dogcollar
+		System.out.println(doc.html());
+		
+		Elements elements = doc.select("ul.list_wt");
+		Iterator<Element> title = elements.select("strong.tit_wt").iterator();
+		Iterator<Element> writer = elements.select("span.txt_info").iterator();
+		Iterator<Element> img = elements.select("img.img_thumb").iterator();
+		Iterator<Element> link = elements.select("a.link_wt").iterator();
+		// http://webtoon.daum.net/webtoon/view/dogcollar
+		// /webtoon/view/baengnodiner
+		
+		while(title.hasNext()) {
+			WebtoonVo vo = new WebtoonVo();
+			String wlink = "http://webtoon.daum.net" + link.next().attr("href");
+			ArrayList<Integer> g_no = new ArrayList<Integer>();
+			vo.setToon_title(title.next().text());
+			vo.setToon_writer(writer.next().text());
+			vo.setToon_pic(img.next().attr("src"));
+			vo.setToon_link(wlink);
+			
+			secondLink(wlink);
+			
+			System.out.println("while");
+			
+		}
+	}
+	
+	public static void secondLink(String url) {
+		Document doc = null;
+		try {
+			doc = Jsoup.connect(url).get();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("secondLink");
+		Elements elements = doc.select("a.link_genre");
+		String genre = "";
+		for(Element e : elements) {
+			genre = genre + " " + e.text();
+		}
+		
+		System.out.println(genre);
+		
 	}
 }
