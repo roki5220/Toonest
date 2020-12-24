@@ -12,7 +12,10 @@ import org.jsoup.select.Elements;
 import pj.toon.vo.WebtoonVo;
 
 public class NaverCrawling {
-	public ArrayList<WebtoonVo> crawl() {
+	public static void main(String[] args) {
+		crawl();
+	}
+	public static ArrayList<WebtoonVo> crawl() {
 		ArrayList<WebtoonVo> list = new ArrayList<WebtoonVo>();
 		setList(list, "daily", 1);
 		setList(list, "drama", 2);
@@ -32,7 +35,7 @@ public class NaverCrawling {
 		return list;
 	}
 
-	public void setList(ArrayList<WebtoonVo> list, String genre, int num) {
+	public static void setList(ArrayList<WebtoonVo> list, String genre, int num) {
 		String url = "https://comic.naver.com/webtoon/genre.nhn?genre=" + genre;
 		Document doc = null;
 		// Document에 페이지의 전체 소스 저장
@@ -43,6 +46,7 @@ public class NaverCrawling {
 			e.printStackTrace();
 		}
 
+		System.out.println(doc.text());
 		Elements elements = doc.select("ul.img_list li");
 		Iterator<Element> title = elements.select(".thumb a").iterator();
 		Iterator<Element> link = elements.select("dt a").iterator();
@@ -51,11 +55,13 @@ public class NaverCrawling {
 		
 		while (title.hasNext() && count <= 20) {
 			WebtoonVo vo = new WebtoonVo();
+			ArrayList<Integer> g_no = new ArrayList<Integer>();
 			vo.setToon_title(title.next().attr("title"));
 			vo.setToon_writer(writer.next().text());
 			vo.setToon_link("https://comic.naver.com" + link.next().attr("href"));
 			vo.setToon_pic(img.next().attr("src"));
-			vo.setG_no(num);
+			g_no.add(num);
+			vo.setG_no(g_no);
 			vo.setToon_site("naver");
 			list.add(vo);
 			count++;
