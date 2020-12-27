@@ -1,4 +1,4 @@
-package WebCrawling;
+package pj.toon.webcrawling;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,17 +21,17 @@ public class DaumCrawling {
 		setList(list, "mon");
 
 		for (WebtoonVo v : list) {
-			System.out.println(v.getToon_title());
+			System.out.println(v.getToon_name());
 			System.out.println(v.getToon_writer());
-			System.out.println(v.getToon_link());
-			System.out.println(v.getG_no());
+			System.out.println(v.getToon_site());
+//			System.out.println(v.getG_no());
 		}
 		
 		return list;
 	}
 
 	public static void setList(ArrayList<WebtoonVo> list, String day) {
-		String url = "http://webtoon.daum.net/#" + day;
+		String url = "http://webtoon.daum.net/search/total?q=%23로맨스#page=1";
 		Document doc = null;
 		// Document에 페이지의 전체 소스 저장
 		try {
@@ -39,7 +39,7 @@ public class DaumCrawling {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(doc.html());
+		System.out.println(doc);
 		
 		Elements elements = doc.select("ul.list_wt");
 		Iterator<Element> title = elements.select("strong.tit_wt").iterator();
@@ -49,20 +49,20 @@ public class DaumCrawling {
 		// http://webtoon.daum.net/webtoon/view/dogcollar
 		// /webtoon/view/baengnodiner
 		
-		while(title.hasNext()) {
-			WebtoonVo vo = new WebtoonVo();
-			String wlink = "http://webtoon.daum.net" + link.next().attr("href");
-			ArrayList<Integer> g_no = new ArrayList<Integer>();
-			vo.setToon_title(title.next().text());
-			vo.setToon_writer(writer.next().text());
-			vo.setToon_pic(img.next().attr("src"));
-			vo.setToon_link(wlink);
-			
-			secondLink(wlink);
-			
-			System.out.println("while");
-			
-		}
+//		while(title.hasNext()) {
+//			WebtoonVo vo = new WebtoonVo();
+//			String wlink = "http://webtoon.daum.net" + link.next().attr("href");
+//			ArrayList<Integer> g_no = new ArrayList<Integer>();
+//			vo.setToon_name(title.next().text());
+//			vo.setToon_writer(writer.next().text());
+//			vo.setToon_pic(img.next().attr("src"));
+//			vo.setToon_site(wlink);
+//			
+//			secondLink(wlink);
+//			
+//			System.out.println("while");
+//			
+//		}
 	}
 	
 	public static void secondLink(String url) {
