@@ -8,8 +8,15 @@ public class WebtoonVo {
 	private String toon_site;
 	private String toon_genre;	//g_no은 장르 테이블의 column
 	private String toon_link;
+	private int toon_view;
 	
 	
+	public int getToon_view() {
+		return toon_view;
+	}
+	public void setToon_view(int toon_view) {
+		this.toon_view = toon_view;
+	}
 	public int getToon_no() {
 		return toon_no;
 	}
