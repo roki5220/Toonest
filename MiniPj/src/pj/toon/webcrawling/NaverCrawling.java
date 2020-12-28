@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import pj.toon.dao_hr.WebtoonDao;
 import pj.toon.vo.WebtoonVo;
 
 public class NaverCrawling {
@@ -38,7 +39,8 @@ public class NaverCrawling {
 //			System.out.println();
 //		}
 		
-		
+		WebtoonDao dao = new WebtoonDao();
+		dao.insert(list);
 		return list;
 	}
 
@@ -60,7 +62,7 @@ public class NaverCrawling {
 		Iterator<Element> writer = elements.select("dd.desc").iterator();
 		Iterator<Element> img = elements.select(".thumb img[src$=jpg]").iterator();
 		
-		while (title.hasNext() && count <= 10) {
+		while (title.hasNext() && count <= 20) {
 			WebtoonVo vo = new WebtoonVo();
 			vo.setToon_name(title.next().attr("title"));
 			vo.setToon_writer(writer.next().text());

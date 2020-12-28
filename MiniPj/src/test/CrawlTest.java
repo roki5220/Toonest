@@ -16,9 +16,6 @@ public class CrawlTest {
 		RidiCrawling.crawl(list);
 		
 
-		WebtoonDao dao = new WebtoonDao();
-		dao.insert(list);
-		
 		return list;
 	}
 	
