@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import pj.toon.vo.WebtoonVo;
 
@@ -15,7 +16,9 @@ public class WebtoonDao extends DAO {
 //	private final String SEARCH = "SELECT toon_name, toon_writer, toon_pic, toon_site, toon_genre FROM webtoon WHERE toon_name like ? OR toon_writer like ?";
 	private final String SEARCH = "SELECT toon_name, toon_writer, toon_pic, toon_site, toon_genre FROM webtoon WHERE toon_name like ?";
 	private final String INSERT = "INSERT INTO webtoon VALUES(toon_seq.nextval, ?, ?, ?, ?, 0, 0, ?, 0, ?)";
+	private final String COUNT = "SELECT COUNT(*) FROM webtoon WHERE toon_name like ? or toon_writer like ?";
 
+	
 	public ArrayList<WebtoonVo> search(String search) {
 		ArrayList<WebtoonVo> list = new ArrayList<WebtoonVo>();
 		WebtoonVo vo;
@@ -41,19 +44,50 @@ public class WebtoonDao extends DAO {
 		}
 		return list;
 	}
+	
+	public ArrayList<WebtoonVo> getSearchList(HashMap<String, Object> listOpt) {
+		ArrayList<WebtoonVo> list = new ArrayList<WebtoonVo>();
+		WebtoonVo vo;
+		String searchBox = (String) listOpt.get("searchBox");
+		int start = (Integer) listOpt.get("start");
+		System.out.println(start);
+		try {
+            StringBuffer sql = new StringBuffer();
+            sql.append("SELECT toon_name, toon_writer, toon_pic, toon_site, toon_genre FROM");
+            sql.append("(SELECT rownum rnum, a.* FROM (SELECT * FROM webtoon ORDER BY toon_no DESC) a ");
+            sql.append("WHERE toon_name LIKE ? OR toon_writer LIKE ?) ");
+            sql.append("WHERE rnum>=? and rnum<=? ORDER BY toon_no DESC");
+            
+			psmt = conn.prepareStatement(sql.toString());
+			psmt.setString(1, "%" + searchBox + "%");
+			psmt.setString(2, "%" + searchBox + "%");
+			psmt.setInt(3, start);
+			psmt.setInt(4, start+9);
+			
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				vo = new WebtoonVo();
+				vo.setToon_name(rs.getString("toon_name"));
+				vo.setToon_writer(rs.getString("toon_writer"));
+				vo.setToon_pic(rs.getString("toon_pic"));
+				vo.setToon_site(rs.getString("toon_site"));
+				vo.setToon_genre(rs.getString("toon_genre"));
+//				vo.setToon_link(rs.getString("toon_link"));
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return list;
+	}
 
-	/*
-	 * toon_no number Primary Key, toon_name Varchar2(100) not null, toon_writer
-	 * varchar2(50) not null, toon_site varchar2(50) not null, toon_genre
-	 * varchar2(20) not null, toon_end number not null, toon_pay number not null,
-	 * toon_pic varchar2(100) not null, toon_view number default 0, toon_link
-	 * varchar2(100) not null);
-	 */
 	public int insert(ArrayList<WebtoonVo> list) {
 		int n = 0;
-		
+
 		try {
-			for (WebtoonVo vo: list) {
+			for (WebtoonVo vo : list) {
 				psmt = conn.prepareStatement(INSERT);
 				psmt.setString(1, vo.getToon_name());
 				psmt.setString(2, vo.getToon_writer());
@@ -61,16 +95,36 @@ public class WebtoonDao extends DAO {
 				psmt.setString(4, vo.getToon_genre());
 				psmt.setString(5, vo.getToon_pic());
 				psmt.setString(6, vo.getToon_link());
-				
+
 				n = psmt.executeUpdate();
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
 		return n;
+	}
+
+	public int getListCount(HashMap<String, Object> listOpt) {
+		// 글의 개수를 가져오는 메소드
+		int result = 0;
+		String searchBox = (String) listOpt.get("searchBox");
+
+		try {
+			psmt = conn.prepareStatement(COUNT);
+			psmt.setString(1, "%" + searchBox + "%");
+			psmt.setString(2, "%" + searchBox + "%");
+
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	private void close() {
