@@ -61,7 +61,7 @@ public class RidiCrawling {
 			WebtoonVo vo = new WebtoonVo();
 			vo.setToon_name(title.next().text());
 			vo.setToon_writer(writer.next().text());
-			vo.setToon_link("https://ridibooks.com/" + link.next().attr("href"));
+			vo.setToon_link("https://ridibooks.com" + link.next().attr("href"));
 			vo.setToon_pic("https:" + img.next().attr("data-src"));
 			vo.setToon_site("리디북스");
 			vo.setToon_genre(genreStr);
