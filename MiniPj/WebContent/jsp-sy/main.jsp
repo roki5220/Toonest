@@ -70,13 +70,13 @@
 									</h4>
 									<h5>${vo.toon_writer }</h5>
 									<c:if test="${vo.toon_site == '네이버' }">
-											<img src="/MiniPj/images/Naver_Line_Webtoon_logo.png" width="30%">
+											<img src="/MiniPj/images/Naver_Line_Webtoon_logo.png" width="9%">
 										</c:if>
 										<c:if test="${vo.toon_site == '카카오페이지' }">
-											<img src="/MiniPj/images/KakaoPage_logo.png" width="30%">
+											<img src="/MiniPj/images/KakaoPage_logo.png" width="8%">
 										</c:if>
 										<c:if test="${vo.toon_site == '리디북스' }">
-											<img src="/MiniPj/images/ridi_logo.png" width="30%">
+											<img src="/MiniPj/images/ridi_logo.png" width="10%">
 										</c:if>
 								</div>
 							</div>
