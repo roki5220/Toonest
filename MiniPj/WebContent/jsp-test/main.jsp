@@ -61,7 +61,7 @@
 					<c:forEach var="vo" end="17" items="${list }">
 						<div class="col-lg-2 col-md-8 mb-3">
 							<div class="card h-100"
-								onclick="location='/MiniPj/jsp-test/body_detail.jsp?id=${vo.toon_no}'">
+								onclick="location='/MiniPj/DetailController.do?toon_no=${vo.toon_no}'">
 								<!-- 클릭하면 상세페이지이동 -->
 								<img class="card-img-top" src="${vo.toon_pic }" alt="">
 								<div class="card-body">
