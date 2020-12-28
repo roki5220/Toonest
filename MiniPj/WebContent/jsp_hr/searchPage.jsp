@@ -31,12 +31,12 @@ strong a {
 	margin: 0 3px;
 	float: left;
 	border: 1px solid #e6e6e6;
-	width: 40px;
-	height: 40px;
-	line-height: 40px;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
 	text-align: center;
 	background-color: #fff;
-	font-size: 20px;
+	font-size: 15px;
 	color: #999999;
 	text-decoration: none;
 }
@@ -73,11 +73,11 @@ strong a {
 
 .title a {
 	font-weight: bold;
-	font-size: 23px;
+	font-size: 18px;
 }
 
 .author, .genre {
-	font-size: 20px;
+	font-size: 15px;
 }
 
 .toonInfo {
@@ -116,7 +116,6 @@ h4 {
 
 	<div class="container">
 		<br>
-		<h4 align="center">"${search }"에 대한 검색결과입니다.</h4>
 		<br>
 		<div class="searchList">
 			<div class="row">
@@ -124,7 +123,7 @@ h4 {
 					<div class="col-lg-6">
 						<div class="toonEach">
 							<a href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}" class="thumb_link"> <img
-								src="${vo.toon_pic}" width="160" class="img_thumb">
+								src="${vo.toon_pic}" width="120" class="img_thumb">
 							</a>
 							<div class="toonInfo" style="display: inline-block;">
 								<strong class="title"> <a href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}" class="title_link">${vo.toon_name }</a>
@@ -135,15 +134,15 @@ h4 {
 									<div class="genre">
 										<c:if test="${vo.toon_site == '네이버' }">
 											<img class="imgTag"
-												src="/MiniPj/images/Naver_Line_Webtoon_logo.png" width="9%">
+												src="/MiniPj/images/Naver_Line_Webtoon_logo.png" width="8%">
 										</c:if>
 										<c:if test="${vo.toon_site == '카카오페이지' }">
 											<img class="imgTag" src="/MiniPj/images/KakaoPage_logo.png"
-												width="8%">
+												width="7%">
 										</c:if>
 										<c:if test="${vo.toon_site == '리디북스' }">
 											<img class="imgTag" src="/MiniPj/images/ridi_logo.png"
-												width="10%">
+												width="8%">
 										</c:if>
 										${vo.toon_genre }
 									</div>
@@ -155,11 +154,12 @@ h4 {
 			</div>
 		</div>
 	</div>
+	<br>
 	<div class="page_wrap">
 		<div id="pageForm" align="center">
 			<c:if test="${startPage != 1 }">
 				<a class="arrow pprev"
-					href="/MiniPj/SearchController.do?page=${startPage-1 }&searchBox2=${searchBox2}">&laquo;</a>
+					href="/MiniPj/SearchController2.do?page=${startPage-1 }&searchBox2=${searchBox2}">&laquo;</a>
 			</c:if>
 
 			<c:forEach var="pageNum" begin="${startPage }" end="${endPage }">
@@ -169,13 +169,13 @@ h4 {
 				</c:if>
 				<c:if test="${pageNum != spage }">
 					<a
-						href="/MiniPj/SearchController.do?page=${pageNum }&searchBox2=${searchBox2}">${pageNum }</a>
+						href="/MiniPj/SearchController2.do?page=${pageNum }&searchBox2=${searchBox2}">${pageNum }</a>
 				</c:if>
 			</c:forEach>
 
 			<c:if test="${endPage != maxPage }">
 				<a class="arrow nnext"
-					href="/MiniPj/SearchController.do?page=${endPage+1 }&searchBox2=${searchBox2}">&raquo;</a>
+					href="/MiniPj/SearchController2.do?page=${endPage+1 }&searchBox2=${searchBox2}">&raquo;</a>
 			</c:if>
 		</div>
 	</div>

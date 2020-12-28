@@ -76,10 +76,10 @@ a {
 			<div
 				class="row flex-nowrap justify-content-between align-items-center">
 				<div class="col-4 text-center">
-					<a href="index.jsp"><img src="/MiniPj/images/toonnest_logo.jpg"></a>
+					<a href="jsp_hr/index.jsp"><img src="/MiniPj/images/toonnest_logo.jpg"></a>
 				</div>
 				<div class="col-4 d-flex justify-content-end align-items-center">
-					<form id="frm"  action="/MiniPj/SearchController.do">
+					<form id="frm"  action="/MiniPj/SearchController2.do">
 						<label> <input placeholder="  오늘은 어떤 웹툰을 찾아볼까요?" size="40"
 							style="border: 1px solid #e5e5e5; height: 50px; border-radius: 10px;"
 							type="text" name="searchBox" id="searchBox">
@@ -99,12 +99,12 @@ a {
 
 		<div class="nav-scroller py-1 mb-2">
 			<nav class="nav d-flex justify-content-between">
-				<a class="p-2 link-secondary" href="GenreListController.do?genre=daily">일 상</a> <a
-					class="p-2 link-secondary" href="GenreListController.do?genre=drama">드 라 마</a> <a
-					class="p-2 link-secondary" href="GenreListController.do?genre=action">액 션</a> <a
-					class="p-2 link-secondary" href="GenreListController.do?genre=fantasy">판 타 지</a> <a
-					class="p-2 link-secondary" href="GenreListController.do?genre=thriller">스 릴 러</a> <a
-					class="p-2 link-secondary" href="GenreListController.do?genre=romance">로 맨 스</a>
+				<a class="p-2 link-secondary g-daily" id="A" href="GenreListController.do?genre=daily">일 상</a> <a
+					class="p-2 link-secondary g-drama" id="A" href="GenreListController.do?genre=drama">드 라 마</a> <a
+					class="p-2 link-secondary g-action" id="A" href="GenreListController.do?genre=action">액 션</a> <a
+					class="p-2 link-secondary g-fantasy" id="A" href="GenreListController.do?genre=fantasy">판 타 지</a> <a
+					class="p-2 link-secondary g-thriller" id="A" href="GenreListController.do?genre=thriller">스 릴 러</a> <a
+					class="p-2 link-secondary g-romance" id="A" href="GenreListController.do?genre=romance">로 맨 스</a>
 			</nav>
 		</div>
 	</div>

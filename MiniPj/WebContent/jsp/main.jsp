@@ -54,13 +54,13 @@
 				</div>
 				<div class="row">
 					<c:forEach var="vo" end="17" items="${list }">
-						<div class="col-lg-2 col-md-8 mb-4">
-							<div class="card h-100">
+						<div class="col-lg-2 col-md-5 mb-4">
+							<div class="webcard">
 								<!-- 클릭하면 상세페이지이동 -->
-								<img class="card-img-top" src="${vo.toon_pic }" alt="" onclick="location='/MiniPj/DetailController.do?toon_no=${vo.toon_no}'">
-								<div class="card-body">
+								<img class="webImg" src="${vo.toon_pic }" onclick="location='/MiniPj/DetailController.do?toon_no=${vo.toon_no}'">
+								<div class="webbody">
 									<h4 class="title">
-										<a href="/MiniPj/DetailController.do?toon_name=${vo.toon_name}">${vo.toon_name }</a>
+										<a href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}">${vo.toon_name }</a>
 									</h4>
 									<h5 class="writer">${vo.toon_writer }
 									<c:if test="${vo.toon_site == '네이버' }">
