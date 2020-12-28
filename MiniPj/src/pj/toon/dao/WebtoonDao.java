@@ -17,12 +17,68 @@ public class WebtoonDao extends DAO {
 	private final String SEARCH = "SELECT toon_name, toon_writer, toon_pic, toon_site, toon_genre FROM webtoon WHERE toon_name like ?";
 	private final String INSERT = "INSERT INTO webtoon VALUES(toon_seq.nextval, ?, ?, ?, ?, 0, 0, ?, 0, ?)";
 	private final String COUNT = "SELECT COUNT(*) FROM webtoon WHERE toon_name like ? or toon_writer like ?";
+	private final String GENRE_CNT = "SELECT COUNT(*) FROM webtoon WHERE toon_genre like ?";
 
 	private final String SELECT_ALL = "SELECT * FROM WEBTOON ORDER BY TOON_VIEW DESC";
 
 	private final String SELECT_DETAIL = 
 			"SELECT * FROM WEBTOON WHERE TOON_NO = ?";
 
+	public int getGenreListCount(HashMap<String, Object> listOpt){
+		int result = 0;
+		String genre = (String) listOpt.get("genre");
+
+		try {
+			psmt = conn.prepareStatement(GENRE_CNT);
+			psmt.setString(1, "%" + genre + "%");
+
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public ArrayList<WebtoonVo> getGenreList(HashMap<String, Object> listOpt){
+		ArrayList<WebtoonVo> list = new ArrayList<WebtoonVo>();
+		WebtoonVo vo;
+		String genre = (String) listOpt.get("genre");
+		int start = (Integer) listOpt.get("start");
+		try {
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT b.* FROM");
+			sql.append("(SELECT rownum rnum, a.* FROM (SELECT * FROM webtoon ORDER BY toon_no) a ");
+			sql.append("WHERE toon_genre LIKE ?) b");
+			sql.append("WHERE rnum>=? and rnum<=? ORDER BY toon_no");
+
+			psmt = conn.prepareStatement(sql.toString());
+			psmt.setString(1, "%" + genre + "%");
+			psmt.setInt(2, start);
+			psmt.setInt(3, start + 9);
+
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				vo = new WebtoonVo();
+				
+				vo.setToon_no(rs.getInt("toon_no"));
+				vo.setToon_name(rs.getString("toon_name"));
+				vo.setToon_writer(rs.getString("toon_writer"));
+				vo.setToon_pic(rs.getString("toon_pic"));
+				vo.setToon_site(rs.getString("toon_site"));
+				vo.setToon_genre(rs.getString("toon_genre"));
+//				vo.setToon_link(rs.getString("toon_link"));
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return list;
+	}
 	public WebtoonVo select_detail(WebtoonVo vo) {
 		try {
 			psmt = conn.prepareStatement(SELECT_DETAIL);
@@ -106,9 +162,9 @@ public class WebtoonDao extends DAO {
 		try {
 			StringBuffer sql = new StringBuffer();
 			sql.append("SELECT toon_name, toon_writer, toon_pic, toon_site, toon_genre, toon_no FROM");
-			sql.append("(SELECT rownum rnum, a.* FROM (SELECT * FROM webtoon ORDER BY toon_no DESC) a ");
+			sql.append("(SELECT rownum rnum, a.* FROM (SELECT * FROM webtoon ORDER BY toon_no) a ");
 			sql.append("WHERE toon_name LIKE ? OR toon_writer LIKE ?) ");
-			sql.append("WHERE rnum>=? and rnum<=? ORDER BY toon_no DESC");
+			sql.append("WHERE rnum>=? and rnum<=? ORDER BY toon_no");
 
 			psmt = conn.prepareStatement(sql.toString());
 			psmt.setString(1, "%" + searchBox + "%");

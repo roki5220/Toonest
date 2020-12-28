@@ -73,7 +73,7 @@ strong a {
 
 .title a {
 	font-weight: bold;
-	font-size: 25px;
+	font-size: 23px;
 }
 
 .author, .genre {
@@ -81,9 +81,8 @@ strong a {
 }
 
 .toonInfo {
-	margin-left: 20px;
+	margin-left: 10px;
 	vertical-align: middle;
-	margin-bottom:20px;
 }
 
 .toonEach {
