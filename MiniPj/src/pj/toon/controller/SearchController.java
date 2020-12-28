@@ -46,7 +46,7 @@ public class SearchController extends HttpServlet {
 		}
 		
 		listOpt.put("searchBox", searchBox);
-		listOpt.put("start", spage * 10 - 9);
+		listOpt.put("start", spage * 15 - 14);
 
 		WebtoonDao dao = new WebtoonDao();
 		int listCount = dao.getListCount(listOpt);
@@ -54,7 +54,7 @@ public class SearchController extends HttpServlet {
 		ArrayList<WebtoonVo> list = dao.getSearchList(listOpt);
 		request.setAttribute("list", list);
 
-		int maxPage = (int) (listCount / 10.0 + 0.9);
+		int maxPage = (int) (listCount / 15.0 + 0.94);
 		int startPage = (int) (spage / 5.0 + 0.8) * 5 - 4;
 		int endPage = startPage + 4;
 		if (endPage > maxPage) {

@@ -11,53 +11,47 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import hr.WebtoonDao;
+import pj.toon.dao.WebtoonDao;
 import pj.toon.vo.WebtoonVo;
 
-@WebServlet("/GenreListController.do")
-public class GenreListController extends HttpServlet {
+@WebServlet("/SearchController2.do")
+public class SearchController2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public GenreListController() {
+	public SearchController2() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
 		request.setCharacterEncoding("utf-8");
-
+		// 현재 페이지 번호
 		int spage = 1;
 		String page = request.getParameter("page");
+
+		// 처음 게시판을 클릭했을 때는 page가 null이므로 1페이지가 뜸
 		if (page != null) {
 			spage = Integer.parseInt(page);
 		}
 
 		HashMap<String, Object> listOpt = new HashMap<String, Object>();
 
-//		일상, 드라마, 액션, 판타지, 스릴러, 로맨스
-		String genre = request.getParameter("genre");
-		String genreKor = "";
-		if(genre.equals("daily"))
-			genreKor = "일상";
-		else if(genre.equals("drama"))
-			genreKor = "드라마";
-		else if(genre.equals("action"))
-			genreKor = "액션";
-		else if(genre.equals("fantasy"))
-			genreKor = "판타지";
-		else if(genre.equals("thriller"))
-			genreKor = "스릴러";
-		else if(genre.equals("romance"))
-			genreKor = "로맨스";
+		String searchBox = null;
+		if (request.getParameter("searchBox") != null) {
+			searchBox = request.getParameter("searchBox");
+			request.setAttribute("searchBox2", searchBox);
+		} else {
+			searchBox = request.getParameter("searchBox2");
+			request.setAttribute("searchBox2", searchBox);
+		}
 		
-		listOpt.put("genreKor", genreKor);
+		listOpt.put("searchBox", searchBox);
 		listOpt.put("start", spage * 15 - 14);
 
 		WebtoonDao dao = new WebtoonDao();
-		int listCount = dao.getGenreListCount(listOpt);
+		int listCount = dao.getListCount(listOpt);
 
-		ArrayList<WebtoonVo> list = dao.getGenreList(listOpt);
+		ArrayList<WebtoonVo> list = dao.getSearchList(listOpt);
 		request.setAttribute("list", list);
 
 		int maxPage = (int) (listCount / 15.0 + 0.94);
@@ -67,14 +61,13 @@ public class GenreListController extends HttpServlet {
 			endPage = maxPage;
 		}
 
-
-		request.setAttribute("genre", genre);
 		request.setAttribute("spage", spage);
 		request.setAttribute("maxPage", maxPage);
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
+		request.setAttribute("search", searchBox);
 
-		String viewPage = "jsp_hr/genrePage.jsp";
+		String viewPage = "jsp_hr/searchPage.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}

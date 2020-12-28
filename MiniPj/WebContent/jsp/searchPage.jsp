@@ -8,7 +8,14 @@
 <title>Insert title here</title>
 <link href="/MiniPj/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap"
+	rel="stylesheet">
 <style>
+div, a {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
 strong a {
 	color: black;
 }
@@ -31,12 +38,12 @@ strong a {
 	margin: 0 3px;
 	float: left;
 	border: 1px solid #e6e6e6;
-	width: 40px;
-	height: 40px;
-	line-height: 40px;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
 	text-align: center;
 	background-color: #fff;
-	font-size: 20px;
+	font-size: 15px;
 	color: #999999;
 	text-decoration: none;
 }
@@ -66,18 +73,18 @@ strong a {
 }
 
 #pageForm a.active {
-	background-color: #42454c;
+	background-color: #005e5c;
 	color: #fff;
-	border: 1px solid #42454c;
+	border: 1px solid #005e5c;
 }
 
 .title a {
 	font-weight: bold;
-	font-size: 25px;
+	font-size: 17px;
 }
 
 .author, .genre {
-	font-size: 20px;
+	font-size: 13px;
 }
 
 .toonInfo {
@@ -122,12 +129,12 @@ h4 {
 		<div class="searchList">
 			<div class="row">
 				<c:forEach var="vo" items="${list }">
-					<div class="col-lg-6">
+					<div class="col-lg-4">
 						<div class="toonEach">
 							<a href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}" class="thumb_link"> <img
-								src="${vo.toon_pic}" width="160" class="img_thumb">
+								src="${vo.toon_pic}" width="110" class="img_thumb">
 							</a>
-							<div class="toonInfo" style="display: inline-block;">
+							<div class="toonInfo" style="display: inline-block; width:60%;">
 								<strong class="title"> <a href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}" class="title_link">${vo.toon_name }</a>
 								</strong>
 								<p></p>
