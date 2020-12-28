@@ -1,39 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Shop Homepage - Start Bootstrap Template</title>
+<title>TooNesT</title>
 
 <!-- Bootstrap core CSS -->
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/MiniPj/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="css/shop-homepage.css" rel="stylesheet">
+<link href="/MiniPj/css/shop-homepage.css" rel="stylesheet">
 
 </head>
-
 <body>
-
-	<!-- Navigation -->
-	<jsp:include page="../jsp/header.jsp" />
-
-	<!-- Page Content -->
+	<jsp:include page="header.jsp" />
 	<div class="container" align="center">
 		<div class="row">
 			<div class="col-lg-12">
 				<div id="carouselExampleIndicators" class="carousel slide my-4"
 					data-ride="carousel">
 					<ol class="carousel-indicators">
-						<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+						<li data-target="#carouselExampleIndicators" data-slide-to="0"
+							class="active"></li>
 						<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
 						<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
 					</ol>
@@ -54,31 +50,38 @@
 					<a class="carousel-control-prev" href="#carouselExampleIndicators"
 						role="button" data-slide="prev"> <span
 						class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-						class="sr-only">Previous</span>
+						class="sr-only">＜</span>
 					</a> <a class="carousel-control-next" href="#carouselExampleIndicators"
 						role="button" data-slide="next"> <span
 						class="carousel-control-next-icon" aria-hidden="true"></span> <span
-						class="sr-only">Next</span>
+						class="sr-only">＞</span>
 					</a>
 				</div>
-				
+				<div class="row">
+					<c:forEach var="vo" end="17" items="${list }">
+						<div class="col-lg-2 col-md-8 mb-4">
+							<div class="card h-100"
+								onclick="location='/MiniPj/DetailController.do?toon_no=${vo.toon_no}'">
+								<!-- 클릭하면 상세페이지이동 -->
+								<img class="card-img-top" src="${vo.toon_pic }" alt="">
+								<div class="card-body">
+									<h4 class="card-title">
+										<a href="#">${vo.toon_name }</a>
+									</h4>
+									<h5>${vo.toon_writer }</h5>
+									<p class="card-text">${vo.toon_site }</p>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
 			</div>
 		</div>
 	</div>
 	<br>
-	<!-- Footer -->
-	<footer class="py-5 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Your
-				Website 2020</p>
-		</div>
-		<!-- /.container -->
-	</footer>
-
 	<!-- Bootstrap core JavaScript -->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+	<script src="/MiniPj/vendor/jquery/jquery.min.js"></script>
+	<script src="/MiniPj/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

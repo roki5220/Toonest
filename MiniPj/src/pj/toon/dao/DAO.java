@@ -1,4 +1,4 @@
-package pj.toon.dao_hr;
+package pj.toon.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

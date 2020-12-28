@@ -2,7 +2,7 @@ package test;
 
 import java.util.ArrayList;
 
-import pj.toon.dao_hr.WebtoonDao;
+import pj.toon.dao.WebtoonDao;
 import pj.toon.vo.WebtoonVo;
 import pj.toon.webcrawling.KakaoCrawling;
 import pj.toon.webcrawling.NaverCrawling;

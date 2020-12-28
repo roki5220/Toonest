@@ -63,7 +63,11 @@ a {
 
 <!-- Custom styles for this template -->
 <link href="../css/blog.css" rel="stylesheet">
-
+<script>
+	function aSubmit(){
+		document.getElementById("frm").submit();
+	}
+</script>
 </head>
 <body>
 
@@ -72,16 +76,16 @@ a {
 			<div
 				class="row flex-nowrap justify-content-between align-items-center">
 				<div class="col-4 text-center">
-					<img src="../images/toonnest_logo.jpg">
+					<a href="index.jsp"><img src="/MiniPj/images/toonnest_logo.jpg"></a>
 				</div>
 				<div class="col-4 d-flex justify-content-end align-items-center">
-					<form action="#">
+					<form id="frm"  action="/MiniPj/SearchController.do">
 						<label> <input placeholder="  오늘은 어떤 웹툰을 찾아볼까요?" size="40"
 							style="border: 1px solid #e5e5e5; height: 50px; border-radius: 10px;"
-							type="text" name="" class="" value>
+							type="text" name="searchBox" id="searchBox">
 						</label>
 					</form>
-					<a class="link-secondary" href="#" aria-label="Search"> <svg
+					<a class="link-secondary" onclick="aSubmit();" aria-label="Search"> <svg
 							id="A" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
 							fill="none" stroke="currentColor" stroke-linecap="round"
 							stroke-linejoin="round" stroke-width="2" class="mx-3" role="img"

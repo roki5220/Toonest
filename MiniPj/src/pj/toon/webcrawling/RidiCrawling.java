@@ -9,7 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import pj.toon.dao_hr.WebtoonDao;
+import pj.toon.dao.WebtoonDao;
 import pj.toon.vo.WebtoonVo;
 
 public class RidiCrawling {

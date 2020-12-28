@@ -1,4 +1,4 @@
-package pj.toon.controller_hr;
+package pj.toon.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pj.toon.dao_hr.WebtoonDao;
+import pj.toon.dao.WebtoonDao;
 import pj.toon.vo.WebtoonVo;
 
 @WebServlet("/SearchController.do")
@@ -67,7 +67,7 @@ public class SearchController extends HttpServlet {
 		request.setAttribute("endPage", endPage);
 		request.setAttribute("search", searchBox);
 
-		String viewPage = "jsp_hr/searchPage.jsp";
+		String viewPage = "jsp/searchPage.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}
