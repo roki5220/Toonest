@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="/MiniPj/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
 <style>
 strong a {
 	color: black;
@@ -70,14 +72,43 @@ strong a {
 }
 
 .title a {
-	font-size: 18px;
 	font-weight: bold;
+	font-size: 23px;
+}
+
+.author, .genre {
+	font-size: 20px;
 }
 
 .toonInfo {
 	margin-left: 10px;
+	vertical-align: middle;
+}
+
+.toonEach {
+	margin-top: 20px;
+}
+
+h4 {
+	margin-top: 20 px;
+	margin-bottom: 35px;
+}
+
+.searchList {
+	border-top: 2px solid #262424;
+	margin-top: 20px;
+	padding-top: 20px;
+}
+
+.author {
+	line-height: 35px;
+}
+
+.imgTag {
+	vertical-align: bottom;
 }
 </style>
+
 </head>
 <body>
 	<!-- Navigation -->
@@ -87,10 +118,11 @@ strong a {
 		<br>
 		<h4 align="center">"${search }"에 대한 검색결과입니다.</h4>
 		<br>
-		<div class="row">
-			<ul id="resultList" style="list-style: none;">
-				<li><c:forEach var="vo" items="${list }">
-						<div class="toonEach" style="margin-bottom: 10px;">
+		<div class="searchList">
+			<div class="row">
+				<c:forEach var="vo" items="${list }">
+					<div class="col-lg-6">
+						<div class="toonEach">
 							<a href="${vo.toon_pic}" class="thumb_link"> <img
 								src="${vo.toon_pic}" width="130" class="img_thumb">
 							</a>
@@ -98,16 +130,30 @@ strong a {
 								<strong class="title"> <a href="" class="title_link">${vo.toon_name }</a>
 								</strong>
 								<p></p>
-								<dl>
-									<dd class="author">${vo.toon_writer }</dd>
-									<dd class="genre">${vo.toon_genre }</dd>
-								</dl>
+								<div>
+									<div class="author">${vo.toon_writer }</div>
+									<div class="genre">
+										<c:if test="${vo.toon_site == '네이버' }">
+											<img class="imgTag"
+												src="/MiniPj/images/Naver_Line_Webtoon_logo.png" width="9%">
+										</c:if>
+										<c:if test="${vo.toon_site == '카카오페이지' }">
+											<img class="imgTag" src="/MiniPj/images/KakaoPage_logo.png"
+												width="8%">
+										</c:if>
+										<c:if test="${vo.toon_site == '리디북스' }">
+											<img class="imgTag" src="/MiniPj/images/ridi_logo.png"
+												width="10%">
+										</c:if>
+										${vo.toon_genre }
+									</div>
+								</div>
 							</div>
 						</div>
-					</c:forEach></li>
-			</ul>
+					</div>
+				</c:forEach>
+			</div>
 		</div>
-
 	</div>
 	<div class="page_wrap">
 		<div id="pageForm" align="center">

@@ -50,7 +50,6 @@ public class WebtoonDao extends DAO {
 		WebtoonVo vo;
 		String searchBox = (String) listOpt.get("searchBox");
 		int start = (Integer) listOpt.get("start");
-		System.out.println(start);
 		try {
             StringBuffer sql = new StringBuffer();
             sql.append("SELECT toon_name, toon_writer, toon_pic, toon_site, toon_genre FROM");
