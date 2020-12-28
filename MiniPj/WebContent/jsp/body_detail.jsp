@@ -41,6 +41,14 @@
 
 </style>
 
+<script>
+        $('#star_grade a').click(function(){
+            $(this).parent().children("a").removeClass("on");  /* 별점의 on 클래스 전부 제거 */ 
+            $(this).addClass("on").prevAll("a").addClass("on"); /* 클릭한 별과, 그 앞 까지 별점에 on 클래스 추가 */
+            return false;
+        });
+</script>
+
 <title>Insert title here</title>
 
 </head>
@@ -60,12 +68,11 @@
 						<h3 class="mb-0">${vo.toon_name }</h3>
 						<div class="mb-1 text-muted">${vo.toon_writer }</div>
 						<p class="card-text mb-auto">별점</p>
-						<p class="stretched-link">키워드</p>
-						
+						<p class="keyword">키워드</p>
+						<div align="right">
 							<input type="button" class="button" onclick="location.href='${vo.toon_link }'" value="보러가기 →">
-						
+						</div>					
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -78,7 +85,7 @@
 					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 
 					<div class="col p-4 d-flex flex-column position-static">
-						<h5 class="mb-0">후기</h5>
+						<h5 class="review_title" style="font-weight:800; color:#005e5c;">REVEIW</h5>
 						<br/>
 						<div style="float:left; margin-right:10px;">
 						<textarea id="story" name="story" rows="5" style="width:100%; border: 1px solid #e5e5e5; border-radius: 5px;" id="textarea" placeholder="  후기를 남겨주세요 :)"></textarea> 
@@ -106,6 +113,14 @@
 							<button class="keyword_b">미래</button>
 							<button class="keyword_b">타임슬립</button>
 						</div>
+						
+						<p id="star_grade">
+        					<a href="#">★</a>
+        					<a href="#">★</a>
+        					<a href="#">★</a>
+        					<a href="#">★</a>
+        					<a href="#">★</a>
+						</p>
 						
 						<button class="buttonA">리뷰 등록</button>
 					</div>
