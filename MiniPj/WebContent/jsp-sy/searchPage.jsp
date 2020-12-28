@@ -73,7 +73,7 @@ strong a {
 
 .title a {
 	font-weight: bold;
-	font-size: 25px;
+	font-size: 23px;
 }
 
 .author, .genre {
@@ -81,9 +81,8 @@ strong a {
 }
 
 .toonInfo {
-	margin-left: 20px;
+	margin-left: 10px;
 	vertical-align: middle;
-	margin-bottom:20px;
 }
 
 .toonEach {
@@ -125,7 +124,7 @@ h4 {
 					<div class="col-lg-6">
 						<div class="toonEach">
 							<a href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}" class="thumb_link"> <img
-								src="${vo.toon_pic}" width="160" class="img_thumb">
+								src="${vo.toon_pic}" width="130" class="img_thumb">
 							</a>
 							<div class="toonInfo" style="display: inline-block;">
 								<strong class="title"> <a href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}" class="title_link">${vo.toon_name }</a>

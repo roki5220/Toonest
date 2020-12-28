@@ -13,64 +13,6 @@ strong a {
 	color: black;
 }
 
-.page_wrap {
-	text-align: center;
-	font-size: 0;
-}
-
-#pageForm {
-	display: inline-block;
-}
-
-#pageForm .none {
-	display: none;
-}
-
-#pageForm a {
-	display: block;
-	margin: 0 3px;
-	float: left;
-	border: 1px solid #e6e6e6;
-	width: 40px;
-	height: 40px;
-	line-height: 40px;
-	text-align: center;
-	background-color: #fff;
-	font-size: 20px;
-	color: #999999;
-	text-decoration: none;
-}
-
-.page_nation .arrow {
-	border: 1px solid #ccc;
-}
-
-#pageForm .pprev {
-	background: #f8f8f8 url('img/page_pprev.png') no-repeat center center;
-	margin-left: 0;
-}
-
-#pageForm .prev {
-	background: #f8f8f8 url('img/page_prev.png') no-repeat center center;
-	margin-right: 7px;
-}
-
-.page_nation .next {
-	background: #f8f8f8 url('img/page_next.png') no-repeat center center;
-	margin-left: 7px;
-}
-
-#pageForm .nnext {
-	background: #f8f8f8 url('img/page_nnext.png') no-repeat center center;
-	margin-right: 0;
-}
-
-#pageForm a.active {
-	background-color: #42454c;
-	color: #fff;
-	border: 1px solid #42454c;
-}
-
 .title a {
 	font-weight: bold;
 	font-size: 25px;
@@ -156,30 +98,5 @@ h4 {
 			</div>
 		</div>
 	</div>
-	<div class="page_wrap">
-		<div id="pageForm" align="center">
-			<c:if test="${startPage != 1 }">
-				<a class="arrow pprev"
-					href="/MiniPj/SearchController.do?page=${startPage-1 }&searchBox2=${searchBox2}">&laquo;</a>
-			</c:if>
-
-			<c:forEach var="pageNum" begin="${startPage }" end="${endPage }">
-				<c:if test="${pageNum == spage }">
-					<a href="#" onclick="return false;" class="active">${pageNum }</a>
-
-				</c:if>
-				<c:if test="${pageNum != spage }">
-					<a
-						href="/MiniPj/SearchController.do?page=${pageNum }&searchBox2=${searchBox2}">${pageNum }</a>
-				</c:if>
-			</c:forEach>
-
-			<c:if test="${endPage != maxPage }">
-				<a class="arrow nnext"
-					href="/MiniPj/SearchController.do?page=${endPage+1 }&searchBox2=${searchBox2}">&raquo;</a>
-			</c:if>
-		</div>
-	</div>
-	<br>
 </body>
 </html>
