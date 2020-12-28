@@ -1,6 +1,7 @@
 package pj.toon.vo;
 
 public class WebtoonVo {
+	private int toon_no;
 	private String toon_name;
 	private String toon_writer;
 	private String toon_pic;
@@ -8,6 +9,13 @@ public class WebtoonVo {
 	private String toon_genre;	//g_no은 장르 테이블의 column
 	private String toon_link;
 	
+	
+	public int getToon_no() {
+		return toon_no;
+	}
+	public void setToon_no(int toon_no) {
+		this.toon_no = toon_no;
+	}
 	public String getToon_site() {
 		return toon_site;
 	}
