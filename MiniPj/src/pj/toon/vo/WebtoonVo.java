@@ -11,6 +11,8 @@ public class WebtoonVo {
 	private int toon_view;
 	
 	
+	
+	
 	public int getToon_view() {
 		return toon_view;
 	}
