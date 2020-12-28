@@ -62,7 +62,7 @@ a {
 </style>
 
 <!-- Custom styles for this template -->
-<link href="../css/blog.css" rel="stylesheet">
+<link href="/MiniPj/css/blog.css" rel="stylesheet">
 <script>
 	function aSubmit(){
 		document.getElementById("frm").submit();

@@ -1,0 +1,60 @@
+.title {
+	font-size: 17px;
+	margin-bottom: 0
+}
+
+.writer {
+	font-size: 15px;
+}
+
+#site {
+	size: 50%;
+}
+
+.webcard {
+	padding-top: .55rem;
+	
+	border: 1px;
+	height: 270px;
+	border: 1px solid #e5e5e5;
+	border-radius: 8px;
+}
+
+.webImg {
+	width: 90%;
+	height: 150px;
+	margin-bottom: .75rem;
+	border-radius: 5px;
+}
+
+.webbody {
+	-ms-flex: 1 1 auto;
+	flex: 1 1 auto;
+	min-height: 1px;
+	height: 60%;
+	margin-left: .55rem;
+	margin-right: .55rem;
+}
+
+.col-lg-2 {
+	position: relative;
+	width: 100%;
+	padding-right: 15px;
+	padding-left: 15px;
+	flex-grow: 1;
+	max-width: 100%;
+	-ms-flex-preferred-size: 0;
+	flex-basis: 0;
+	-ms-flex-positive: 1;
+}
+
+a:link { 
+	color: #000000;
+}
+a:visited { 
+	color: #000000;
+}
+.title a:hover {
+	text-decoration: none;
+	color: black;
+}

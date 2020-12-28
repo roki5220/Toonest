@@ -9,19 +9,15 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-
 <title>TooNesT</title>
-
 <!-- Bootstrap core CSS -->
 <link href="/MiniPj/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-
 <!-- Custom styles for this template -->
 <link href="/MiniPj/css/shop-homepage.css" rel="stylesheet">
-
+<jsp:include page="header.jsp" />
 </head>
 <body>
-	<jsp:include page="header.jsp" />
 	<div class="container" align="center">
 		<div class="row">
 			<div class="col-lg-12">
