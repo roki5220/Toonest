@@ -26,8 +26,10 @@ public class DetailController extends HttpServlet {
 		WebtoonDao dao = new WebtoonDao();
 		WebtoonVo vo = new WebtoonVo();
 		int toon_no = Integer.parseInt(request.getParameter("toon_no"));
+		String toon_name = request.getParameter("toon_name");
 		
 		vo.setToon_no(toon_no);
+		vo.setToon_name(toon_name);
 		vo = dao.select_detail(vo);
 		System.out.println(vo);
 		

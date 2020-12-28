@@ -9,19 +9,14 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-
 <title>TooNesT</title>
-
 <!-- Bootstrap core CSS -->
 <link href="/MiniPj/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-
-<!-- Custom styles for this template -->
-<link href="/MiniPj/css/shop-homepage.css" rel="stylesheet">
-
+<link href="/MiniPj/css/main.css" rel="stylesheet">
+<jsp:include page="header.jsp" />
 </head>
 <body>
-	<jsp:include page="header.jsp" />
 	<div class="container" align="center">
 		<div class="row">
 			<div class="col-lg-12">
@@ -60,24 +55,25 @@
 				<div class="row">
 					<c:forEach var="vo" end="17" items="${list }">
 						<div class="col-lg-2 col-md-8 mb-4">
-							<div class="card h-100"
-								onclick="location='/MiniPj/DetailController.do?toon_no=${vo.toon_no}'">
+							<div class="card h-100">
 								<!-- 클릭하면 상세페이지이동 -->
-								<img class="card-img-top" src="${vo.toon_pic }" alt="">
+								<img class="card-img-top" src="${vo.toon_pic }" alt="" onclick="location='/MiniPj/DetailController.do?toon_no=${vo.toon_no}'">
 								<div class="card-body">
-									<h4 class="card-title">
-										<a href="#">${vo.toon_name }</a>
+									<h4 class="title">
+										<a href="/MiniPj/DetailController.do?toon_name=${vo.toon_name}">${vo.toon_name }</a>
 									</h4>
-									<h5>${vo.toon_writer }</h5>
+									<h5 class="writer">${vo.toon_writer }
 									<c:if test="${vo.toon_site == '네이버' }">
-											<img src="/MiniPj/images/Naver_Line_Webtoon_logo.png" width="30%">
-										</c:if>
-										<c:if test="${vo.toon_site == '카카오페이지' }">
-											<img src="/MiniPj/images/KakaoPage_logo.png" width="30%">
-										</c:if>
-										<c:if test="${vo.toon_site == '리디북스' }">
-											<img src="/MiniPj/images/ridi_logo.png" width="30%">
-										</c:if>
+										<img src="/MiniPj/images/Naver_Line_Webtoon_logo.png"
+											width="30%">
+									</c:if>
+									<c:if test="${vo.toon_site == '카카오페이지' }">
+										<img src="/MiniPj/images/KakaoPage_logo.png" width="30%">
+									</c:if>
+									<c:if test="${vo.toon_site == '리디북스' }">
+										<img src="/MiniPj/images/ridi_logo.png" width="30%">
+									</c:if>
+									</h5>
 								</div>
 							</div>
 						</div>
