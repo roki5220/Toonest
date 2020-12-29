@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import pj.toon.vo.ReviewInsertVo;
 import pj.toon.vo.WebtoonVo;
 
 public class WebtoonDao extends DAO {
@@ -21,8 +22,61 @@ public class WebtoonDao extends DAO {
 
 	private final String SELECT_ALL = "SELECT * FROM WEBTOON ORDER BY TOON_VIEW DESC";
 
-	private final String SELECT_DETAIL = 
-			"SELECT * FROM WEBTOON WHERE TOON_NO = ?";
+	///수정 희원
+		private final String SELECT_DETAIL = 
+				"select r.star, w.* from webtoon w, (select round(avg(review_star), 2) star, toon_no from review where toon_no = ? group by toon_no) r where w.toon_no = r.toon_no";
+		
+		public WebtoonVo select_detail(WebtoonVo vo) {
+			try {
+				psmt = conn.prepareStatement(SELECT_DETAIL);
+				psmt.setInt(1, vo.getToon_no());
+				rs = psmt.executeQuery();
+				if(rs.next()) {
+					vo = new WebtoonVo();
+					vo.setToon_no(rs.getInt("toon_no"));
+					vo.setToon_name(rs.getString("toon_name"));
+					vo.setToon_writer(rs.getString("toon_writer"));
+					vo.setToon_pic(rs.getString("toon_pic"));
+					vo.setToon_site(rs.getString("toon_site"));
+					vo.setToon_genre(rs.getString("toon_genre"));
+					vo.setToon_link(rs.getString("toon_link"));
+					vo.setToon_view(rs.getInt("toon_view"));
+					vo.setAvg_star(rs.getDouble(1));
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close();
+			}
+			return vo;
+		}
+		
+		
+		private final String INSERT_REVIEW = 
+				"INSERT INTO review VALUES(r_seq.NEXTVAL, ?, ?, ?, ?, ?)";
+		
+		public int INSERT_REVIEW(ReviewInsertVo vo) {
+			int n = 0;
+			try {
+				psmt = conn.prepareStatement(INSERT_REVIEW);
+				psmt.setString(1, vo.getReview_content());
+				psmt.setInt(2, vo.getReview_star());
+				psmt.setInt(3, vo.getToon_no());
+				psmt.setString(4, vo.getNickname());
+				psmt.setString(5, vo.getPassword());
+				n = psmt.executeUpdate();
+				
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close();
+			}
+			
+			return n;
+		}
+		
+	
+	
 
 	public int getGenreListCount(HashMap<String, Object> listOpt){
 		int result = 0;
@@ -90,29 +144,7 @@ where w.toon_no = r.toon_no;
 		return list;
 	}
 	
-	public WebtoonVo select_detail(WebtoonVo vo) {
-		try {
-			psmt = conn.prepareStatement(SELECT_DETAIL);
-			psmt.setInt(1, vo.getToon_no());
-			rs = psmt.executeQuery();
-			if(rs.next()) {
-				vo = new WebtoonVo();
-				vo.setToon_no(rs.getInt("toon_no"));
-				vo.setToon_name(rs.getString("toon_name"));
-				vo.setToon_writer(rs.getString("toon_writer"));
-				vo.setToon_pic(rs.getString("toon_pic"));
-				vo.setToon_site(rs.getString("toon_site"));
-				vo.setToon_genre(rs.getString("toon_genre"));
-				vo.setToon_link(rs.getString("toon_link"));
-				vo.setToon_view(rs.getInt("toon_view"));
-			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close();
-		}
-		return vo;
-	}
+	
 	
 	public ArrayList<WebtoonVo> selectAll() {
 		ArrayList<WebtoonVo> list = new ArrayList<WebtoonVo>();

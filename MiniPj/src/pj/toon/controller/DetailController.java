@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import pj.toon.dao.WebtoonDao;
+
 import pj.toon.vo.WebtoonVo;
 
 @WebServlet("/DetailController.do")
@@ -31,7 +32,7 @@ public class DetailController extends HttpServlet {
 		vo.setToon_no(toon_no);
 		vo.setToon_name(toon_name);
 		vo = dao.select_detail(vo);
-		System.out.println(vo);
+		System.out.println(vo.getAvg_star());
 		
 		request.setAttribute("vo", vo);
 		String viewPage = "jsp/body_detail.jsp";
@@ -46,3 +47,4 @@ public class DetailController extends HttpServlet {
 	}
 
 }
+

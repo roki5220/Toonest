@@ -9,10 +9,16 @@ public class WebtoonVo {
 	private String toon_genre;	//g_no은 장르 테이블의 column
 	private String toon_link;
 	private int toon_view;
+	private double avg_star;
 	
 	
 	
-	
+	public double getAvg_star() {
+		return avg_star;
+	}
+	public void setAvg_star(double avg_star) {
+		this.avg_star = avg_star;
+	}
 	public int getToon_view() {
 		return toon_view;
 	}

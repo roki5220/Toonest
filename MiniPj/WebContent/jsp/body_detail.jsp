@@ -48,6 +48,27 @@
 
 <title>Insert title here</title>
 
+<script>
+	var maxChecked = 3; //선택가능한 체크박스 갯수
+	var totalChecked = 0; // 설정 끝
+
+	function CountChecked(field) {
+		if (field.checked)
+			totalChecked += 1;
+		else
+			totalChecked -= 1;
+		if (totalChecked > maxChecked) {
+			alert("최대 3개 까지만 가능합니다.");
+			field.checked = false;
+			totalChecked -= 1;
+		}
+	}
+
+	function ResetCount() {
+		totalChecked = 0;
+	}
+</script>
+
 </head>
 <body>
 	<main class="container" align="center">
@@ -66,7 +87,7 @@
 						<strong class="d-inline-block mb-2 text-primary">${vo.toon_genre }</strong>
 						<h3 class="mb-0">${vo.toon_name }</h3>
 						<div class="mb-1 text-muted">${vo.toon_writer }</div>
-						<p class="card-text mb-auto">별점</p>
+						<p class="card-text mb-auto">${vo.avg_star }점</p>
 						<p class="keyword">키워드</p>
 						<div align="right">
 							<input type="button" class="button"
@@ -84,120 +105,126 @@
 				<div
 					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 
-					<div class="col p-4 d-flex flex-column position-static">
-						<h5 class="review_title" style="font-weight: 800; color: #005e5c;">REVEIW</h5>
-						
-						<!-- 별점 -->
-						<div>
-						<fieldset class="rating">
-							<input type="radio" id="star5" name="rating" value="5" />
-							<label class="full" for="star5" title="Awesome - 5 stars"></label> 
-							
-							<input type="radio" id="star4" name="rating" value="4" />
-							<label class="full" for="star4" title="Pretty good - 4 stars"></label>
-							
-							<input type="radio" id="star3" name="rating" value="3" />
-							<label class="full" for="star3" title="Meh - 3 stars"></label> 
-							
-							<input type="radio" id="star2" name="rating" value="2" />
-							<label class="full" for="star2" title="Kinda bad - 2 stars"></label> 
-							
-							<input type="radio" id="star1" name="rating" value="1" />
-							<label class="full" for="star1" title="Sucks big time - 1 star"></label>
-							
-						</fieldset>
+					<form id="frm" name="frm" action="/MiniPj/ReviewInsertController.do?toon_no=${vo.toon_no }" method="post">
+						<div class="col p-4 d-flex flex-column position-static">
+							<h5 class="review_title"
+								style="font-weight: 800; color: #005e5c;">REVEIW</h5>
+
+
+							<!-- 별점 -->
+							<div>
+								<fieldset class="rating" align="center">
+									<input type="radio" id="star5" name="rating" value="5" /> <label
+										class="full" for="star5" title="Awesome - 5 stars"></label> <input
+										type="radio" id="star4" name="rating" value="4" /> <label
+										class="full" for="star4" title="Pretty good - 4 stars"></label>
+
+									<input type="radio" id="star3" name="rating" value="3" /> <label
+										class="full" for="star3" title="Meh - 3 stars"></label> <input
+										type="radio" id="star2" name="rating" value="2" /> <label
+										class="full" for="star2" title="Kinda bad - 2 stars"></label>
+
+									<input type="radio" id="star1" name="rating" value="1" /> <label
+										class="full" for="star1" title="Sucks big time - 1 star"></label>
+
+								</fieldset>
+							</div>
+
+							<!-- 닉네임, 패스워드 -->
+							<div>
+								<input placeholder="  닉네임을 적어주세요" size="20"
+									style="border: 1px solid #e5e5e5; height: 40px; border-radius: 5px; margin: 0px 10px 15px 1px;"
+									type="text" name="nick_name" id="nick_name"> <input
+									placeholder="  비밀번호를 입력해주세요" size="20"
+									style="border: 1px solid #e5e5e5; height: 40px; border-radius: 5px;"
+									type="text" name="password" id="password">
+
+							</div>
+
+							<!-- 후기 작성란 -->
+							<div style="float: left; margin-right: 10px;">
+								<textarea id="story" name="reviewContent" rows="5"
+									style="width: 100%; border: 1px solid #e5e5e5; border-radius: 5px;"
+									id="textarea" placeholder="  후기를 남겨주세요 :)"></textarea>
+							</div>
+
+							<!-- 키워드 선택지 -->
+							<div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="코믹"><span>코믹</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="무협"><span>무협</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="학원"><span>학원</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="지식"><span>지식</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="스포츠"><span>스포츠</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="회귀/환생"><span>회귀/환생</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="힐링"><span>힐링</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="게임판타지"><span>게임판타지</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="여주원탑"><span>여주원탑</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="퇴마"><span>퇴마</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="미래"><span>미래</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="의학"><span>의학</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="초능력"><span>초능력</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" value="복수/배신"><span>복수/배신</span>
+									</label>
+								</div>
+							</div>
+
+							<input type="submit" class="buttonA" value="리뷰 등록">
 						</div>
-
-
-						<div style="float: left; margin-right: 10px;">
-							<textarea id="story" name="story" rows="5"
-								style="width: 100%; border: 1px solid #e5e5e5; border-radius: 5px;"
-								id="textarea" placeholder="  후기를 남겨주세요 :)"></textarea>
-						</div>
-
-						<div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>회귀</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>환생</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>중세판타지</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>빙의</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>힐링</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>먼치킨</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>여주원탑</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>동양풍</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>정령</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>스포츠</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>의학</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>용사</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>초능력</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>하렘</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>역하렘</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>복수/배신</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>미래</span>
-								</label>
-							</div>
-							<div id="ck-button">
-								<label> <input type="checkbox" id="" class="" value=""><span>타임슬립</span>
-								</label>
-							</div>
-						</div>
-
-						<!-- <p id="star_grade">
-							<a href="#">★</a> <a href="#">★</a> <a href="#">★</a> <a href="#">★</a>
-							<a href="#">★</a>
-						</p> -->
-
-						<button class="buttonA">리뷰 등록</button>
-					</div>
-
+					</form>
 				</div>
 			</div>
 		</div>
