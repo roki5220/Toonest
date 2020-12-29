@@ -16,10 +16,6 @@ div, a {
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-strong a {
-	color: black;
-}
-
 .page_wrap {
 	text-align: center;
 	font-size: 0;
@@ -79,7 +75,7 @@ strong a {
 }
 
 .title a {
-	font-weight: bold;
+	color: black;
 	font-size: 17px;
 }
 
@@ -88,9 +84,8 @@ strong a {
 }
 
 .toonInfo {
-	margin-left: 20px;
+	margin-left: 10px;
 	vertical-align: middle;
-	margin-bottom:20px;
 }
 
 .toonEach {
@@ -98,13 +93,12 @@ strong a {
 }
 
 h4 {
-	margin-top: 50 px;
+	margin-top: 20 px;
 	margin-bottom: 35px;
 }
 
 .searchList {
-	border-top: 2px solid #e5e5e5;
-	margin-top: 10px;
+	margin-top: 20px;
 	padding-top: 20px;
 }
 
@@ -115,16 +109,60 @@ h4 {
 .imgTag {
 	vertical-align: bottom;
 }
-</style>
 
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(function(){
+	function getParameterByName(name) {
+	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	        results = regex.exec(location.search);
+	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+	
+	var genre = getParameterByName('genre');
+	if(genre == 'daily'){
+		$('.g-daily').css({
+			"text-decoration": "underline",
+			"font-weight": "bold"
+		});
+	} else if(genre == 'drama'){
+		$('.g-drama').css({
+			"text-decoration": "underline",
+			"font-weight": "bold"
+		});
+	} else if(genre == 'action'){
+		$('.g-action').css({
+			"text-decoration": "underline",
+			"font-weight": "bold"
+		});
+	} else if(genre == 'fantasy'){
+		$('.g-fantasy').css({
+			"text-decoration": "underline",
+			"font-weight": "bold"
+		});
+	} else if(genre == 'thriller'){
+		$('.g-thriller').css({
+			"text-decoration": "underline",
+			"font-weight": "bold"
+		});
+	} else if(genre == 'romance'){
+		$('.g-romance').css({
+			"color": "#005e5c",
+			"text-decoration": "underline",
+			"font-weight": "bold"
+		});
+	}
+});
+</script>
 </head>
 <body>
 	<!-- Navigation -->
 	<jsp:include page="header.jsp" />
 
 	<div class="container">
-		<br><br><br>
-		<h4 align="center">"${search }"에 대한 검색결과입니다.</h4>
+		<br>
 		<br>
 		<div class="searchList">
 			<div class="row">
@@ -134,8 +172,8 @@ h4 {
 							<a href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}" class="thumb_link"> <img
 								src="${vo.toon_pic}" width="110" class="img_thumb">
 							</a>
-							<div class="toonInfo" style="display: inline-block; width:60%;">
-								<strong class="title"> <a href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}" class="title_link">${vo.toon_name }</a>
+							<div class="toonInfo" style="display: inline-block; width: 60%;">
+								<strong class="title"> <a href="/MiniPj/ReviewList.do?toon_no=${vo.toon_no}" class="title_link">${vo.toon_name }</a>
 								</strong>
 								<p></p>
 								<div>
@@ -143,15 +181,15 @@ h4 {
 									<div class="genre">
 										<c:if test="${vo.toon_site == '네이버' }">
 											<img class="imgTag"
-												src="/MiniPj/images/Naver_Line_Webtoon_logo.png" width="9%">
+												src="/MiniPj/images/Naver_Line_Webtoon_logo.png" width="8%">
 										</c:if>
 										<c:if test="${vo.toon_site == '카카오페이지' }">
 											<img class="imgTag" src="/MiniPj/images/KakaoPage_logo.png"
-												width="8%">
+												width="7%">
 										</c:if>
 										<c:if test="${vo.toon_site == '리디북스' }">
 											<img class="imgTag" src="/MiniPj/images/ridi_logo.png"
-												width="10%">
+												width="8%">
 										</c:if>
 										${vo.toon_genre }
 									</div>
@@ -163,11 +201,12 @@ h4 {
 			</div>
 		</div>
 	</div>
+	<br>
 	<div class="page_wrap">
 		<div id="pageForm" align="center">
 			<c:if test="${startPage != 1 }">
-				<a class="arrow prev"
-					href="/MiniPj/SearchController.do?page=${startPage-1 }&searchBox2=${searchBox2}">&laquo;</a>
+				<a class="arrow pprev"
+					href="/MiniPj/GenreListController.do?page=${startPage-1 }&genre=${genre}">&laquo;</a>
 			</c:if>
 
 			<c:forEach var="pageNum" begin="${startPage }" end="${endPage }">
@@ -177,13 +216,13 @@ h4 {
 				</c:if>
 				<c:if test="${pageNum != spage }">
 					<a
-						href="/MiniPj/SearchController.do?page=${pageNum }&searchBox2=${searchBox2}">${pageNum }</a>
+						href="/MiniPj/GenreListController.do?page=${pageNum }&genre=${genre}">${pageNum }</a>
 				</c:if>
 			</c:forEach>
 
 			<c:if test="${endPage != maxPage }">
-				<a class="arrow next"
-					href="/MiniPj/SearchController.do?page=${endPage+1 }&searchBox2=${searchBox2}">&raquo;</a>
+				<a class="arrow nnext"
+					href="/MiniPj/GenreListController.do?page=${endPage+1 }&genre=${genre}">&raquo;</a>
 			</c:if>
 		</div>
 	</div>

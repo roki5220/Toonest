@@ -48,10 +48,6 @@ strong a {
 	text-decoration: none;
 }
 
-.page_nation .arrow {
-	border: 1px solid #ccc;
-}
-
 #pageForm .pprev {
 	background: #f8f8f8 url('img/page_pprev.png') no-repeat center center;
 	margin-left: 0;
@@ -60,11 +56,6 @@ strong a {
 #pageForm .prev {
 	background: #f8f8f8 url('img/page_prev.png') no-repeat center center;
 	margin-right: 7px;
-}
-
-.page_nation .next {
-	background: #f8f8f8 url('img/page_next.png') no-repeat center center;
-	margin-left: 7px;
 }
 
 #pageForm .nnext {
@@ -166,7 +157,7 @@ h4 {
 	<div class="page_wrap">
 		<div id="pageForm" align="center">
 			<c:if test="${startPage != 1 }">
-				<a class="arrow prev"
+				<a class="arrow pprev"
 					href="/MiniPj/SearchController.do?page=${startPage-1 }&searchBox2=${searchBox2}">&laquo;</a>
 			</c:if>
 
@@ -182,7 +173,7 @@ h4 {
 			</c:forEach>
 
 			<c:if test="${endPage != maxPage }">
-				<a class="arrow next"
+				<a class="arrow nnext"
 					href="/MiniPj/SearchController.do?page=${endPage+1 }&searchBox2=${searchBox2}">&raquo;</a>
 			</c:if>
 		</div>
