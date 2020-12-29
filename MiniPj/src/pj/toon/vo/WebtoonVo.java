@@ -11,8 +11,15 @@ public class WebtoonVo {
 	private int toon_view;
 	private double avg_star;
 	private int review_star;
+	private int count_review;
 	
 	
+	public int getCount_review() {
+		return count_review;
+	}
+	public void setCount_review(int count_review) {
+		this.count_review = count_review;
+	}
 	public int getReview_star() {
 		return review_star;
 	}

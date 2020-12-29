@@ -27,15 +27,9 @@ public class WebListController extends HttpServlet {
 		WebtoonDao dao = new WebtoonDao();
 		WebtoonVo vo = new WebtoonVo();
 		
-		
 		ArrayList<WebtoonVo> list = dao.selectAll();
 		request.setAttribute("list", list);
 		
-		System.out.println(list.size());
-		
-		for(WebtoonVo v : list) {
-			System.out.println(v.getToon_name());
-		}
 		
 		String viewPage = "jsp/main.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

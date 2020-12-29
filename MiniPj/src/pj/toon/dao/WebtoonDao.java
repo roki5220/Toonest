@@ -20,8 +20,10 @@ public class WebtoonDao extends DAO {
 	private final String INSERT = "INSERT INTO webtoon VALUES(toon_seq.nextval, ?, ?, ?, ?, 0, 0, ?, 0, ?)";
 	private final String COUNT = "SELECT COUNT(*) FROM webtoon WHERE toon_name like ? or toon_writer like ?";
 	private final String GENRE_CNT = "SELECT COUNT(*) FROM webtoon WHERE toon_genre = ?";
-//	private final String SELECT_ALL = "SELECT R.STAR, R.CNT, W.* FROM WEBTOON W, (SELECT COUNT(*) CNT, ROUND(AVG(REVIEW_STAR), 2) STAR, TOON_NO FROM REVIEW GROUP BY TOON_NO) R WHERE W.TOON_NO = R.TOON_NO ORDER BY TOON_VIEW DESC";
-	private final String SELECT_ALL = "SELECT * FROM WEBTOON ORDER BY TOON_VIEW DESC";
+	private final String SELECT_ALL = "SELECT NVL(R.STAR, 0) avgstar, NVL(R.CNT, 0) creview, W.*\n"
+			+ "FROM WEBTOON W LEFT OUTER JOIN (SELECT COUNT(*) CNT, ROUND(AVG(REVIEW_STAR), 2) STAR, TOON_NO FROM REVIEW GROUP BY TOON_NO) R\n"
+			+ "ON w.toon_no=r.toon_no ORDER BY TOON_VIEW DESC";
+//	private final String SELECT_ALL = "SELECT * FROM WEBTOON ORDER BY TOON_VIEW DESC";
 	private final String SELECT_ONE = "SELECT * FROM WEBTOON WHERE TOON_NO = ? ";
 	private final String VIEWUP = "UPDATE WEBTOON SET TOON_VIEW = TOON_VIEW+1 WHERE TOON_NO=?";
 	private final String REVIEW_CNT = "SELECT COUNT(*) FROM review WHERE toon_no = ? GROUP BY toon_no";
@@ -304,7 +306,7 @@ where w.toon_no = r.toon_no;
 	
 	public ArrayList<WebtoonVo> selectAll() {
 		ArrayList<WebtoonVo> list = new ArrayList<WebtoonVo>();
-		;
+		
 		try {
 			WebtoonVo vo = new WebtoonVo();
 			psmt = conn.prepareStatement(SELECT_ALL);
@@ -318,7 +320,9 @@ where w.toon_no = r.toon_no;
 				vo.setToon_site(rs.getString("toon_site"));
 				vo.setToon_pic(rs.getString("toon_pic"));
 				vo.setToon_link(rs.getString("toon_link"));
-				//vo.setReview_star(rs.getInt("review_star"));
+				vo.setReview_star(rs.getInt("avgstar"));
+				vo.setReview_star(rs.getInt("avgstar"));
+				vo.setCount_review(rs.getInt("creview"));
 				list.add(vo);
 			}
 		} catch (SQLException e) {

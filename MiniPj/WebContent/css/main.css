@@ -54,3 +54,9 @@ a:visited {
 	text-decoration: none;
 	color: black;
 }
+
+
+.carousel-control-prev {
+	-webkit-filter: opacity(15) drop-shadow(0 0 0 black);
+	filter: opacity(15) drop-shadow(0 0 0 black);
+}

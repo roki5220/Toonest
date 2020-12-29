@@ -19,6 +19,14 @@
 .container {
 	font-family: 'Noto Sans KR', sans-serif;
 }
+
+body {
+  background: #fff;
+  color: #000;
+}
+a {
+  color: #fff;
+}
 </style>
 </head>
 <body>
@@ -35,23 +43,26 @@
 					</ol>
 					<div class="carousel-inner" role="listbox">
 						<div class="carousel-item active">
-							<a href="/MiniPj/DetailController.do?toon_no=38"> <img class="d-block img-fluid"
-								src="/MiniPj/images/Getback-1.jpg" alt="First slide"
-								onmouseover="this.src='/MiniPj/images/Getback-2.jpg'"
+							<a href="/MiniPj/DetailController.do?toon_no=38"> <img
+								class="d-block img-fluid" src="/MiniPj/images/Getback-1.jpg"
+								alt="First slide"
+								onmouseover="this.src='/MiniPj/images/getback.jpg'"
 								onmouseout="this.src='/MiniPj/images/Getback-1.jpg'">
 							</a>
 						</div>
 						<div class="carousel-item">
-							<a href="/MiniPj/DetailController.do?toon_no=123"> <img class="d-block img-fluid"
-								src="/MiniPj/images/chit-1.jpg" alt="Second slide"
-								onmouseover="this.src='/MiniPj/images/chit-2.png'"
+							<a href="/MiniPj/DetailController.do?toon_no=123"> <img
+								class="d-block img-fluid" src="/MiniPj/images/chit-1.jpg"
+								alt="Second slide"
+								onmouseover="this.src='/MiniPj/images/chitra.jpg'"
 								onmouseout="this.src='/MiniPj/images/chit-1.jpg'">
 							</a>
 						</div>
 						<div class="carousel-item">
-							<a href="/MiniPj/DetailController.do?toon_no=64"> <img class="d-block img-fluid"
-								src="/MiniPj/images/you-1.jpg" alt="Third slide"
-								onmouseover="this.src='/MiniPj/images/you-2.jpg'"
+							<a href="/MiniPj/DetailController.do?toon_no=64"> <img
+								class="d-block img-fluid" src="/MiniPj/images/you-1.jpg"
+								alt="Third slide"
+								onmouseover="this.src='/MiniPj/images/you.jpg'"
 								onmouseout="this.src='/MiniPj/images/you-1.jpg'">
 							</a>
 						</div>
@@ -89,7 +100,17 @@
 											<img src="/MiniPj/images/ridi_logo.png" width="15%">
 										</c:if>
 									</h5>
-									<p class="restar">${vo.review_star }</p>
+									<p style="color: #005e5c;">
+										<c:choose>
+											<c:when test="${vo.review_star == 0 || vo.review_star eq null}">&#x02606;&#x02606;&#x02606;&#x02606;&#x02606;</c:when>
+											<c:when test="${vo.review_star > 0 && vo.review_star <= 1}">&#x02605;&#x02606;&#x02606;&#x02606;&#x02606;</c:when>
+											<c:when test="${vo.review_star > 1 && vo.review_star <= 2}">&#x02605;&#x02605;&#x02606;&#x02606;&#x02606;</c:when>
+											<c:when test="${vo.review_star > 2 && vo.review_star <= 3}">&#x02605;&#x02605;&#x02605;&#x02606;&#x02606;</c:when>
+											<c:when test="${vo.review_star > 3 && vo.review_star <= 4}">&#x02605;&#x02605;&#x02605;&#x02605;&#x02606;</c:when>
+											<c:when test="${vo.review_star > 4 && vo.review_star == 5}">&#x02605;&#x02605;&#x02605;&#x02605;&#x02605;</c:when>
+										</c:choose>
+										(${vo.count_review })
+									</p>
 								</div>
 							</div>
 						</div>
@@ -102,6 +123,16 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="/MiniPj/vendor/jquery/jquery.min.js"></script>
 	<script src="/MiniPj/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	
+	<script src='https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js'></script>
+<script>
+    var sf = new Snowflakes({
+        color: "skyblue", // 색상
+        count: 75, // 갯수
+        minOpacity: 0.2, // 최소 투명도 0: 투명 | 1: 불투명
+        maxOpacity: 0.6 // 최대 투명도
+    });
+</script>
 </body>
 
 </html>
