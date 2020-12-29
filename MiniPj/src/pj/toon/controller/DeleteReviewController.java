@@ -1,4 +1,4 @@
-package pj.toon.hr;
+package pj.toon.controller;
 
 import java.io.IOException;
 
@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import pj.toon.dao.WebtoonDao;
+
 
 @WebServlet("/DeleteReview.do")
 public class DeleteReviewController extends HttpServlet {
@@ -20,7 +23,7 @@ public class DeleteReviewController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		
-		WebtoonDaoHr dao = new WebtoonDaoHr();
+		WebtoonDao dao = new WebtoonDao();
 		
 		int review_no = Integer.parseInt(request.getParameter("rno"));
 		
@@ -29,7 +32,7 @@ public class DeleteReviewController extends HttpServlet {
 		dao.deleteReview(review_no);
 		dao.deleteKeyword(review_no);
 		
-		String viewPage = "/ReviewList.do?toon_no=" + toon_no;
+		String viewPage = "/DetailController.do?toon_no=" + toon_no;
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}

@@ -1,21 +1,17 @@
 .title {
-	font-size: 17px;
-	margin-bottom: 0
+	font-size: 18px;
+	margin-top: 5px
 }
 
 .writer {
 	font-size: 15px;
-}
-
-#site {
-	size: 50%;
+	margin-top: 15px;
 }
 
 .webcard {
 	padding-top: .55rem;
-	
 	border: 1px;
-	height: 270px;
+	height: 310px;
 	border: 1px solid #e5e5e5;
 	border-radius: 8px;
 }

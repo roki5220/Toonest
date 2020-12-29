@@ -6,12 +6,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import pj.toon.vo.ReviewInsertVo;
+import pj.toon.vo.ReviewVo;
 import pj.toon.vo.WebtoonVo;
 
 public class WebtoonDao extends DAO {
 	private PreparedStatement psmt;
 	private ResultSet rs;
+	private ResultSet rs2;
 
 	// 검색어, 제목, 작가명, 썸네일, 플랫폼, 장르
 //	private final String SEARCH = "SELECT toon_name, toon_writer, toon_pic, toon_site, toon_genre FROM webtoon WHERE toon_name like ? OR toon_writer like ?";
@@ -19,13 +20,168 @@ public class WebtoonDao extends DAO {
 	private final String INSERT = "INSERT INTO webtoon VALUES(toon_seq.nextval, ?, ?, ?, ?, 0, 0, ?, 0, ?)";
 	private final String COUNT = "SELECT COUNT(*) FROM webtoon WHERE toon_name like ? or toon_writer like ?";
 	private final String GENRE_CNT = "SELECT COUNT(*) FROM webtoon WHERE toon_genre = ?";
-
+//	private final String SELECT_ALL = "SELECT R.STAR, R.CNT, W.* FROM WEBTOON W, (SELECT COUNT(*) CNT, ROUND(AVG(REVIEW_STAR), 2) STAR, TOON_NO FROM REVIEW GROUP BY TOON_NO) R WHERE W.TOON_NO = R.TOON_NO ORDER BY TOON_VIEW DESC";
 	private final String SELECT_ALL = "SELECT * FROM WEBTOON ORDER BY TOON_VIEW DESC";
-
-	///수정 희원
-		private final String SELECT_DETAIL = 
-				"select r.star, w.* from webtoon w, (select round(avg(review_star), 2) star, toon_no from review where toon_no = ? group by toon_no) r where w.toon_no = r.toon_no";
+	private final String SELECT_ONE = "SELECT * FROM WEBTOON WHERE TOON_NO = ? ";
+	private final String VIEWUP = "UPDATE WEBTOON SET TOON_VIEW = TOON_VIEW+1 WHERE TOON_NO=?";
+	private final String REVIEW_CNT = "SELECT COUNT(*) FROM review WHERE toon_no = ? GROUP BY toon_no";
+	private final String KEYWORD = "SELECT k_name FROM keyword WHERE review_no = ?";
+	private final String DELETE_REV = "DELETE FROM review WHERE review_no = ?";
+	private final String DELETE_KEY = "DELETE FROM keyword WHERE review_no = ?";
+	private final String SEARCH_REV = "SELECT toon_no FROM review WHERE review_no = ?";
+	
+	
+	public int deleteReview(int review_no) {
+		int n = 0;
 		
+		try {
+			psmt = conn.prepareStatement(DELETE_REV);
+			psmt.setInt(1, review_no);
+			
+			n = psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return n;
+	}
+	
+	public int deleteKeyword(int review_no) {
+		int n = 0;
+		
+		try {
+			psmt = conn.prepareStatement(DELETE_KEY);
+			psmt.setInt(1, review_no);
+			
+			n = psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return n;
+	}
+	
+	public int selectReview(int review_no) {
+		int toon_no = 0;
+		try {
+			psmt = conn.prepareStatement(SEARCH_REV);
+			psmt.setInt(1, review_no);
+			
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				toon_no = rs.getInt("toon_no");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return toon_no;
+	}
+	
+	public ArrayList<String> getKeyword(int review_no) {
+		ArrayList<String> keyList = new ArrayList<String>();
+		
+		try {
+			psmt = conn.prepareStatement(KEYWORD);
+			psmt.setInt(1, review_no);
+			
+			rs2 = psmt.executeQuery();
+			
+			while(rs2.next()) {
+				keyList.add(rs2.getString("k_name"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return keyList;
+	}
+	
+	public ArrayList<ReviewVo> getReviewList(ReviewVo vo, int start) {
+		ArrayList<ReviewVo> list = new ArrayList<ReviewVo>();
+		
+		try {
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT b.* FROM ");
+			sql.append("(SELECT rownum rnum, a.* FROM (SELECT * FROM review ORDER BY review_no DESC) a ");
+			sql.append("WHERE toon_no = ?) b ");
+			sql.append("WHERE rnum>=? and rnum<=? ORDER BY review_no DESC");
+			
+			psmt = conn.prepareStatement(sql.toString());
+			psmt.setInt(1, vo.getToon_no());
+			psmt.setInt(2, start);
+			psmt.setInt(3, start + 2);
+			
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				vo = new ReviewVo();
+				vo.setToon_no(rs.getInt("toon_no"));
+				vo.setReview_no(rs.getInt("review_no"));
+				vo.setReview_content(rs.getString("review_content"));
+				vo.setReview_star(rs.getInt("review_star"));
+				vo.setNickname(rs.getString("nickname"));
+				vo.setPassword(rs.getString("password"));
+				
+				ArrayList<String> keyList = getKeyword(rs.getInt("review_no"));
+				vo.setKeyList(keyList);
+				
+				list.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		for(ReviewVo v: list) {
+			System.out.println(v.getNickname());
+		}
+		return list;
+	}
+	
+	public int getReviewCount(ReviewVo vo, int start) {
+		int result = 0;
+		
+		try {
+			psmt = conn.prepareStatement(REVIEW_CNT);
+			psmt.setInt(1, vo.getToon_no());
+			
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result; 
+	}
+	
+	//보러가기버튼 count증가
+	public WebtoonVo viewWeb(WebtoonVo vo) {
+		try {
+			
+			psmt = conn.prepareStatement(SELECT_ONE);
+			psmt.setInt(1, vo.getToon_no());
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				psmt = conn.prepareStatement(VIEWUP);
+				psmt.setInt(1, vo.getToon_no());
+				psmt.execute();
+				vo = new WebtoonVo();
+				vo.setToon_no(rs.getInt("toon_no"));
+				vo.setToon_link(rs.getString("toon_link"));
+				vo.setToon_view(rs.getInt("toon_view"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return vo;
+	}
+	
+	///수정 희원
+//		private final String SELECT_DETAIL = 
+//				"select r.star, w.* from webtoon w, (select round(avg(review_star), 2) star, toon_no from review where toon_no = ? group by toon_no) r where w.toon_no = r.toon_no";
+		private final String SELECT_DETAIL = "SELECT * FROM WEBTOON WHERE TOON_NO = ? ";
 		public WebtoonVo select_detail(WebtoonVo vo) {
 			try {
 				psmt = conn.prepareStatement(SELECT_DETAIL);
@@ -55,7 +211,7 @@ public class WebtoonDao extends DAO {
 		private final String INSERT_REVIEW = 
 				"INSERT INTO review VALUES(r_seq.NEXTVAL, ?, ?, ?, ?, ?)";
 		
-		public int INSERT_REVIEW(ReviewInsertVo vo) {
+		public int INSERT_REVIEW(ReviewVo vo) {
 			int n = 0;
 			try {
 				psmt = conn.prepareStatement(INSERT_REVIEW);
@@ -148,8 +304,9 @@ where w.toon_no = r.toon_no;
 	
 	public ArrayList<WebtoonVo> selectAll() {
 		ArrayList<WebtoonVo> list = new ArrayList<WebtoonVo>();
-		WebtoonVo vo;
+		;
 		try {
+			WebtoonVo vo = new WebtoonVo();
 			psmt = conn.prepareStatement(SELECT_ALL);
 			rs = psmt.executeQuery();
 
@@ -161,6 +318,7 @@ where w.toon_no = r.toon_no;
 				vo.setToon_site(rs.getString("toon_site"));
 				vo.setToon_pic(rs.getString("toon_pic"));
 				vo.setToon_link(rs.getString("toon_link"));
+				//vo.setReview_star(rs.getInt("review_star"));
 				list.add(vo);
 			}
 		} catch (SQLException e) {

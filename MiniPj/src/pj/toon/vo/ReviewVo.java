@@ -1,34 +1,28 @@
-package pj.toon.hr;
+package pj.toon.vo;
 
 import java.util.ArrayList;
 
 public class ReviewVo {
 	private int review_no;
-	private int toon_no;
 	private String review_content;
 	private int review_star;
+	private int toon_no;
 	private String nickname;
 	private String password;
-	
 	private ArrayList<String> keyList;
 	
-	public ArrayList<String> getKeyList() {
-		return keyList;
-	}
-	public void setKeyList(ArrayList<String> keyList) {
-		this.keyList = keyList;
-	}
+	
 	public int getReview_no() {
 		return review_no;
 	}
 	public void setReview_no(int review_no) {
 		this.review_no = review_no;
 	}
-	public int getToon_no() {
-		return toon_no;
+	public ArrayList<String> getKeyList() {
+		return keyList;
 	}
-	public void setToon_no(int toon_no) {
-		this.toon_no = toon_no;
+	public void setKeyList(ArrayList<String> keyList) {
+		this.keyList = keyList;
 	}
 	public String getReview_content() {
 		return review_content;
@@ -41,6 +35,12 @@ public class ReviewVo {
 	}
 	public void setReview_star(int review_star) {
 		this.review_star = review_star;
+	}
+	public int getToon_no() {
+		return toon_no;
+	}
+	public void setToon_no(int toon_no) {
+		this.toon_no = toon_no;
 	}
 	public String getNickname() {
 		return nickname;
@@ -55,4 +55,9 @@ public class ReviewVo {
 		this.password = password;
 	}
 	
+	
+	
+	
+	
+
 }

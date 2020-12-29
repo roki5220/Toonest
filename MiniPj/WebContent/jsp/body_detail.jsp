@@ -44,6 +44,96 @@
 	color: #fff;
 	transform: translateY(-7px);
 }
+
+.page_wrap {
+	text-align: center;
+	font-size: 0;
+}
+
+#pageForm {
+	display: inline-block;
+}
+
+#pageForm .none {
+	display: none;
+}
+
+#pageForm a {
+	display: block;
+	margin: 0 3px;
+	float: left;
+	border: 1px solid #e6e6e6;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	background-color: #fff;
+	font-size: 15px;
+	color: #999999;
+	text-decoration: none;
+}
+
+#pageForm .pprev {
+	background: #f8f8f8 url('img/page_pprev.png') no-repeat center center;
+	margin-left: 0;
+}
+
+#pageForm .prev {
+	background: #f8f8f8 url('img/page_prev.png') no-repeat center center;
+	margin-right: 7px;
+}
+
+#pageForm .nnext {
+	background: #f8f8f8 url('img/page_nnext.png') no-repeat center center;
+	margin-right: 0;
+}
+
+#pageForm a.active {
+	background-color: #005e5c;
+	color: #fff;
+	border: 1px solid #005e5c;
+}
+
+.u_cbox_area {
+	margin-top: 20px;
+	border-top: 1px solid #e5e5e5;
+}
+
+.reviewContent {
+	resize: none;
+	margin: 8px 0px 2px 0px;
+	width: 90%;
+	height: 120%;
+	border-radius:10px;
+	border:none;
+}
+
+.divReview {
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 10px;
+}
+
+.eachReview {
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.userimage {
+	-webkit-filter: opacity(.5) drop-shadow(0 0 0 #009996);
+	filter: opacity(.5) drop-shadow(0 0 0 #009996);
+}
+
+.keytag {
+	background-color: #f3f4f5;
+	padding: 2px 7px 2px 7px;
+	margin: 0px 2px 0px 2px;
+	border-radius: 7px;
+}
+
+.starspan {
+	margin-right: 10px;
+}
 </style>
 
 <title>Insert title here</title>
@@ -66,6 +156,16 @@
 
 	function ResetCount() {
 		totalChecked = 0;
+	}
+	
+	function deleteReview(password, review_no){
+		var promptPw = prompt("비밀번호를 입력하세요");
+		
+		if(promptPw == password){
+			location.href="/MiniPj/DeleteReview.do?rno="+review_no;
+		} else{
+			alert("잘못된 비밀번호입니다");
+		}
 	}
 </script>
 
@@ -90,8 +190,9 @@
 						<p class="card-text mb-auto">${vo.avg_star }점</p>
 						<p class="keyword">키워드</p>
 						<div align="right">
-							<input type="button" class="button"
-								onclick="location.href='${vo.toon_link }'" value="보러가기 →">
+							<a href='/MiniPj/ToonView.do?toon_no=${vo.toon_no }' target='_blank'> <input type="button" class="button"
+								value="보러가기 →">
+							</a>
 						</div>
 					</div>
 				</div>
@@ -237,25 +338,60 @@
 					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 					<div class="col p-4 d-flex flex-column position-static"
 						align="left">
-						<h5 class="review_list" style="font-weight: 800; color: #005e5c;">REVIEW LIST</h5>
+						<h5 class="review_list" style="font-weight: 800; color: #005e5c;">REVIEW
+							LIST</h5>
+						<div class="divReview">
+							<c:forEach var="rvo" items="${list }">
+								<div class="u_cbox_area">
+									<div class="eachReview">
+										<div style="margin-top: 20px;">
+											<img class="userimage" src="images/user_edit.png"
+												style="width: 20px; vertical-align: middle">
+											${rvo.nickname }
+											<img src="images/delete.png" onclick="deleteReview(${rvo.password }, ${rvo.review_no })" style="width: 20px; cursor:pointer; float:right">
+										</div>
+										<div>
+											<textarea class="reviewContent"
+												readonly>${rvo.review_content}</textarea>
+										</div>
+										<div>
+											<span class="starspan" style="color: #005e5c; width: 90px;"><c:forEach
+													begin="1" end="${rvo.review_star}">&#x02605;</c:forEach><c:forEach begin="1" end="${5 - rvo.review_star }">&#x02606;</c:forEach>
+											</span>
 
-						<div class="u_cbox_area">
-							<ul>
-								<li>
-									닉네임??
-								</li>
-								<li>
-									내용
-								</li>
-								<li>
-									별점
-								</li>
-								<li>
-									키워드
-								</li>
-							</ul>
+											<c:forEach var="keyword" items="${rvo.keyList }">
+												<span class="keytag">${keyword }</span>
+											</c:forEach>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
 						</div>
 
+						<div class="page_wrap">
+							<div id="pageForm" align="center">
+								<c:if test="${startPage != 1 }">
+									<a class="arrow pprev"
+										href="/MiniPj/DetailController.do?page=${startPage-1 }&toon_no=${toon_no}">&laquo;</a>
+								</c:if>
+
+								<c:forEach var="pageNum" begin="${startPage }" end="${endPage }">
+									<c:if test="${pageNum == spage }">
+										<a href="#" onclick="return false;" class="active">${pageNum }</a>
+
+									</c:if>
+									<c:if test="${pageNum != spage }">
+										<a
+											href="/MiniPj/DetailController.do?page=${pageNum }&toon_no=${toon_no}">${pageNum }</a>
+									</c:if>
+								</c:forEach>
+
+								<c:if test="${endPage != maxPage }">
+									<a class="arrow nnext"
+										href="/MiniPj/DetailController.do?page=${endPage+1 }&toon_no=${toon_no}">&raquo;</a>
+								</c:if>
+							</div>
+						</div>
 					</div>
 
 				</div>

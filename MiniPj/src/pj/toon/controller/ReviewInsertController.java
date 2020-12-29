@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import pj.toon.dao.WebtoonDao;
-import pj.toon.vo.ReviewInsertVo;
+import pj.toon.vo.ReviewVo;
 import pj.toon.vo.WebtoonVo;
 
 @WebServlet("/ReviewInsertController.do")
@@ -24,7 +24,7 @@ public class ReviewInsertController extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		WebtoonDao dao = new WebtoonDao();
-		ReviewInsertVo vo = new ReviewInsertVo(); 
+		ReviewVo vo = new ReviewVo(); 
 		/* int toon_no = Integer.parseInt(request.getParameter("toon_no")); */
 		String toon_no = request.getParameter("toon_no");
 		

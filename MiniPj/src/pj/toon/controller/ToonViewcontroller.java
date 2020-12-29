@@ -1,7 +1,6 @@
-package pj.toon.hr;
+package pj.toon.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,24 +12,27 @@ import javax.servlet.http.HttpServletResponse;
 import pj.toon.dao.WebtoonDao;
 import pj.toon.vo.WebtoonVo;
 
-@WebServlet("/WebList2.do")
-public class WebListController extends HttpServlet {
+@WebServlet("/ToonView.do")
+public class ToonViewcontroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public WebListController() {
+	public ToonViewcontroller() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		WebtoonDaoHr dao = new WebtoonDaoHr();
-		ArrayList<WebtoonVo> list = dao.selectAll();
-		request.setAttribute("list", list);
-		
-		String viewPage = "jsp_hr/main.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-		dispatcher.forward(request, response);
+		WebtoonDao dao = new WebtoonDao();
+		WebtoonVo vo = new WebtoonVo();
+
+		vo.setToon_no(Integer.valueOf(request.getParameter("toon_no")));
+
+		vo = dao.viewWeb(vo);
+
+		request.setAttribute("vo", vo);
+
+		String viewPage = vo.getToon_link();
+		response.sendRedirect(viewPage);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

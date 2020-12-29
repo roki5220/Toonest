@@ -10,8 +10,15 @@ public class WebtoonVo {
 	private String toon_link;
 	private int toon_view;
 	private double avg_star;
+	private int review_star;
 	
 	
+	public int getReview_star() {
+		return review_star;
+	}
+	public void setReview_star(int review_star) {
+		this.review_star = review_star;
+	}
 	
 	public double getAvg_star() {
 		return avg_star;
