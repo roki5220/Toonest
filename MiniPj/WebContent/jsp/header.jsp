@@ -99,12 +99,12 @@ a {
 
 		<div class="nav-scroller py-1 mb-2">
 			<nav class="nav d-flex justify-content-between">
-				<a class="p-2 link-secondary" id="A" href="#">일 상</a> <a
-					class="p-2 link-secondary" id="A" href="#">드 라 마</a> <a
-					class="p-2 link-secondary" id="A" href="#">액 션</a> <a
-					class="p-2 link-secondary" id="A" href="#">판 타 지</a> <a
-					class="p-2 link-secondary" id="A" href="#">스 릴 러</a> <a
-					class="p-2 link-secondary" id="A" href="#">로 맨 스</a>
+				<a class="p-2 link-secondary g-daily" id="A" href="GenreListController.do?genre=daily">일 상</a> <a
+					class="p-2 link-secondary g-drama" id="A" href="GenreListController.do?genre=drama">드 라 마</a> <a
+					class="p-2 link-secondary g-action" id="A" href="GenreListController.do?genre=action">액 션</a> <a
+					class="p-2 link-secondary g-fantasy" id="A" href="GenreListController.do?genre=fantasy">판 타 지</a> <a
+					class="p-2 link-secondary g-thriller" id="A" href="GenreListController.do?genre=thriller">스 릴 러</a> <a
+					class="p-2 link-secondary g-romance" id="A" href="GenreListController.do?genre=romance">로 맨 스</a>
 			</nav>
 		</div>
 	</div>

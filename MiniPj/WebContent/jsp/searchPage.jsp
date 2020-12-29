@@ -98,13 +98,13 @@ strong a {
 }
 
 h4 {
-	margin-top: 20 px;
+	margin-top: 50 px;
 	margin-bottom: 35px;
 }
 
 .searchList {
-	border-top: 2px solid #262424;
-	margin-top: 20px;
+	border-top: 2px solid #e5e5e5;
+	margin-top: 10px;
 	padding-top: 20px;
 }
 
@@ -123,7 +123,7 @@ h4 {
 	<jsp:include page="header.jsp" />
 
 	<div class="container">
-		<br>
+		<br><br><br>
 		<h4 align="center">"${search }"에 대한 검색결과입니다.</h4>
 		<br>
 		<div class="searchList">

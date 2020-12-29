@@ -1,4 +1,4 @@
-package hr;
+package pj.toon.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import hr.WebtoonDao;
+import pj.toon.dao.WebtoonDao;
 import pj.toon.vo.WebtoonVo;
 
 @WebServlet("/GenreListController.do")
@@ -74,7 +74,7 @@ public class GenreListController extends HttpServlet {
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
 
-		String viewPage = "jsp_hr/genrePage.jsp";
+		String viewPage = "jsp/genrePage.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}

@@ -17,7 +17,7 @@ public class WebtoonDao extends DAO {
 	private final String SEARCH = "SELECT toon_name, toon_writer, toon_pic, toon_site, toon_genre FROM webtoon WHERE toon_name like ?";
 	private final String INSERT = "INSERT INTO webtoon VALUES(toon_seq.nextval, ?, ?, ?, ?, 0, 0, ?, 0, ?)";
 	private final String COUNT = "SELECT COUNT(*) FROM webtoon WHERE toon_name like ? or toon_writer like ?";
-	private final String GENRE_CNT = "SELECT COUNT(*) FROM webtoon WHERE toon_genre like ?";
+	private final String GENRE_CNT = "SELECT COUNT(*) FROM webtoon WHERE toon_genre = ?";
 
 	private final String SELECT_ALL = "SELECT * FROM WEBTOON ORDER BY TOON_VIEW DESC";
 
@@ -26,11 +26,11 @@ public class WebtoonDao extends DAO {
 
 	public int getGenreListCount(HashMap<String, Object> listOpt){
 		int result = 0;
-		String genre = (String) listOpt.get("genre");
+		String genreKor = (String) listOpt.get("genreKor");
 
 		try {
 			psmt = conn.prepareStatement(GENRE_CNT);
-			psmt.setString(1, "%" + genre + "%");
+			psmt.setString(1, genreKor);
 
 			rs = psmt.executeQuery();
 			if (rs.next()) {
@@ -45,19 +45,19 @@ public class WebtoonDao extends DAO {
 	public ArrayList<WebtoonVo> getGenreList(HashMap<String, Object> listOpt){
 		ArrayList<WebtoonVo> list = new ArrayList<WebtoonVo>();
 		WebtoonVo vo;
-		String genre = (String) listOpt.get("genre");
+		String genreKor = (String) listOpt.get("genreKor");
 		int start = (Integer) listOpt.get("start");
 		try {
 			StringBuffer sql = new StringBuffer();
-			sql.append("SELECT b.* FROM");
+			sql.append("SELECT b.* FROM ");
 			sql.append("(SELECT rownum rnum, a.* FROM (SELECT * FROM webtoon ORDER BY toon_no) a ");
-			sql.append("WHERE toon_genre LIKE ?) b");
+			sql.append("WHERE toon_genre = ?) b ");
 			sql.append("WHERE rnum>=? and rnum<=? ORDER BY toon_no");
 
 			psmt = conn.prepareStatement(sql.toString());
-			psmt.setString(1, "%" + genre + "%");
+			psmt.setString(1, genreKor);
 			psmt.setInt(2, start);
-			psmt.setInt(3, start + 9);
+			psmt.setInt(3, start + 14);
 
 			rs = psmt.executeQuery();
 			while (rs.next()) {
@@ -70,6 +70,16 @@ public class WebtoonDao extends DAO {
 				vo.setToon_site(rs.getString("toon_site"));
 				vo.setToon_genre(rs.getString("toon_genre"));
 //				vo.setToon_link(rs.getString("toon_link"));
+//				만약 별점평균 넣을거면 vo에 별점평균 변수 만들고, toon_no 가져와서 
+				/*
+				 * select r.star, w.*
+from webtoon w,
+  (select round(avg(review_star), 2) star, toon_no from review
+   where toon_no = 1
+   group by toon_no) r
+where w.toon_no = r.toon_no;
+이거 하
+				 */
 				list.add(vo);
 			}
 		} catch (SQLException e) {
@@ -79,6 +89,7 @@ public class WebtoonDao extends DAO {
 		}
 		return list;
 	}
+	
 	public WebtoonVo select_detail(WebtoonVo vo) {
 		try {
 			psmt = conn.prepareStatement(SELECT_DETAIL);

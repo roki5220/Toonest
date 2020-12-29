@@ -15,6 +15,11 @@
 	rel="stylesheet">
 <link href="/MiniPj/css/main.css" rel="stylesheet">
 <jsp:include page="header.jsp" />
+<style>
+.container {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+</style>
 </head>
 <body>
 	<div class="container" align="center">

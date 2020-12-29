@@ -98,7 +98,6 @@ h4 {
 }
 
 .searchList {
-	border-top: 2px solid #262424;
 	margin-top: 20px;
 	padding-top: 20px;
 }
