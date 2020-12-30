@@ -21,6 +21,7 @@
 	height: 150px;
 	margin-bottom: .75rem;
 	border-radius: 5px;
+	cursor:pointer;
 }
 
 .webbody {

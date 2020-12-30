@@ -33,10 +33,18 @@ public class DetailController extends HttpServlet {
 		vo.setToon_no(toon_no);
 		vo.setToon_name(toon_name);
 		vo = dao.select_detail(vo);
-		System.out.println(vo.getAvg_star());
 		
+	
 		//===============================
-		
+	
+		// keyword list
+		ArrayList<String> keyList = dao.getKeywordOrder(toon_no);
+		String lastKey = "";
+		if(keyList.size() != 0) lastKey = keyList.get(keyList.size()-1);
+		request.setAttribute("keyList", keyList);
+		request.setAttribute("lastKey", lastKey);
+
+		//====================
 		int spage = 1;
 		String page = request.getParameter("page");
 		if (page != null) {

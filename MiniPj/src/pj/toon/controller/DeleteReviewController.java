@@ -32,9 +32,8 @@ public class DeleteReviewController extends HttpServlet {
 		dao.deleteReview(review_no);
 		dao.deleteKeyword(review_no);
 		
-		String viewPage = "/DetailController.do?toon_no=" + toon_no;
-		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-		dispatcher.forward(request, response);
+		String viewPage = "/MiniPj/DetailController.do?toon_no=" + toon_no;
+		response.sendRedirect(viewPage);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

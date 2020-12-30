@@ -15,11 +15,13 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap"
 	rel="stylesheet">
 <style>
+@import
+	url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 .container {
 	font-family: 'Noto Sans KR', sans-serif;
 }
+
 .button {
 	width: 160px;
 	height: 40px;
@@ -104,8 +106,8 @@
 	margin: 8px 0px 2px 0px;
 	width: 90%;
 	height: 120%;
-	border-radius:10px;
-	border:none;
+	border-radius: 10px;
+	border: none;
 }
 
 .divReview {
@@ -188,9 +190,12 @@
 						<h3 class="mb-0">${vo.toon_name }</h3>
 						<div class="mb-1 text-muted">${vo.toon_writer }</div>
 						<p class="card-text mb-auto">${vo.avg_star }점</p>
-						<p class="keyword">키워드</p>
+						<p class="keyword">
+							<c:forEach var="keystr" items="${keyList }">${keystr }<c:if test="${keystr != lastKey}"> | </c:if></c:forEach>
+						</p>
 						<div align="right">
-							<a href='/MiniPj/ToonView.do?toon_no=${vo.toon_no }' target='_blank'> <input type="button" class="button"
+							<a href='/MiniPj/ToonView.do?toon_no=${vo.toon_no }'
+								target='_blank'> <input type="button" class="button"
 								value="보러가기 →">
 							</a>
 						</div>
@@ -206,7 +211,9 @@
 				<div
 					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 
-					<form id="frm" name="frm" action="/MiniPj/ReviewInsertController.do?toon_no=${vo.toon_no }" method="post">
+					<form id="frm" name="frm"
+						action="/MiniPj/ReviewInsertController.do?toon_no=${vo.toon_no }"
+						method="post">
 						<div class="col p-4 d-flex flex-column position-static">
 							<h5 class="review_title"
 								style="font-weight: 800; color: #005e5c;">REVEIW</h5>
@@ -227,7 +234,7 @@
 
 									<input type="radio" id="star1" name="rating" value="1" /> <label
 										class="full" for="star1" title="Sucks big time - 1 star"></label>
-
+									<input type="hidden" name="rating" value="0">
 								</fieldset>
 							</div>
 
@@ -235,10 +242,10 @@
 							<div>
 								<input placeholder="  닉네임을 적어주세요" size="20"
 									style="border: 1px solid #e5e5e5; height: 40px; border-radius: 5px; margin: 0px 10px 15px 1px;"
-									type="text" name="nick_name" id="nick_name"> <input
+									type="text" name="nick_name" id="nick_name" maxlength="10"> <input
 									placeholder="  비밀번호를 입력해주세요" size="20"
 									style="border: 1px solid #e5e5e5; height: 40px; border-radius: 5px;"
-									type="text" name="password" id="password">
+									type="password" name="password" id="password" maxlength="15" required>
 
 							</div>
 
@@ -246,81 +253,147 @@
 							<div style="float: left; margin-right: 10px;">
 								<textarea id="story" name="reviewContent" rows="5"
 									style="width: 100%; border: 1px solid #e5e5e5; border-radius: 5px;"
-									id="textarea" placeholder="  후기를 남겨주세요 :)"></textarea>
+									id="textarea" placeholder="  후기를 남겨주세요 :)" required></textarea>
 							</div>
 
 							<!-- 키워드 선택지 -->
 							<div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="코믹"><span>코믹</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="코믹"><span>코믹</span>
 									</label>
 								</div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="무협"><span>무협</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="동양풍"><span>동양풍</span>
 									</label>
 								</div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="학원"><span>학원</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="학원"><span>학원</span>
 									</label>
 								</div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="지식"><span>지식</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="캠퍼스"><span>캠퍼스</span>
 									</label>
 								</div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="스포츠"><span>스포츠</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="회귀/환생"><span>회귀/환생</span>
 									</label>
 								</div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="회귀/환생"><span>회귀/환생</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="힐링"><span>힐링</span>
 									</label>
 								</div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="힐링"><span>힐링</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="게임판타지"><span>게임판타지</span>
 									</label>
 								</div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="게임판타지"><span>게임판타지</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="여주원탑"><span>여주원탑</span>
 									</label>
 								</div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="여주원탑"><span>여주원탑</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="퇴마"><span>퇴마</span>
 									</label>
 								</div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="퇴마"><span>퇴마</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="시대/역사"><span>시대/역사</span>
 									</label>
 								</div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="미래"><span>미래</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="성장"><span>성장</span>
 									</label>
 								</div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="의학"><span>의학</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="미래"><span>미래</span>
 									</label>
 								</div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="초능력"><span>초능력</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="의학"><span>의학</span>
 									</label>
 								</div>
 								<div id="ck-button">
 									<label> <input type="checkbox"
-										onclick="CountChecked(this)" id="" class="" value="복수/배신"><span>복수/배신</span>
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="초능력"><span>초능력</span>
 									</label>
 								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="복수/배신"><span>복수/배신</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="빙의"><span>빙의</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="먼치킨"><span>먼치킨</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="지식"><span>지식</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="스포츠"><span>스포츠</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="동물"><span>동물</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="인외/초월자"><span>인외/초월자</span>
+									</label>
+								</div>
+								<div id="ck-button">
+									<label> <input type="checkbox"
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="차원이동"><span>차원이동</span>
+									</label>
+								</div>
+									<input type="hidden"
+										onclick="CountChecked(this)" id="" class="" name="keyword"
+										value="">
+									
 							</div>
 
 							<input type="submit" class="buttonA" value="리뷰 등록">
@@ -346,17 +419,18 @@
 									<div class="eachReview">
 										<div style="margin-top: 20px;">
 											<img class="userimage" src="images/user_edit.png"
-												style="width: 20px; vertical-align: middle">
-											${rvo.nickname }
-											<img src="images/delete.png" onclick="deleteReview(${rvo.password }, ${rvo.review_no })" style="width: 20px; cursor:pointer; float:right">
+												style="width: 20px; vertical-align: middle; color:#4a4a4a">
+											${rvo.nickname } <img src="images/delete.png"
+												onclick="deleteReview(${rvo.password }, ${rvo.review_no })"
+												style="width: 20px; cursor: pointer; float: right">
 										</div>
 										<div>
-											<textarea class="reviewContent"
-												readonly>${rvo.review_content}</textarea>
+											<textarea class="reviewContent" readonly>${rvo.review_content}</textarea>
 										</div>
 										<div>
 											<span class="starspan" style="color: #005e5c; width: 90px;"><c:forEach
-													begin="1" end="${rvo.review_star}">&#x02605;</c:forEach><c:forEach begin="1" end="${5 - rvo.review_star }">&#x02606;</c:forEach>
+													begin="1" end="${rvo.review_star}">&#x02605;</c:forEach>
+												<c:forEach begin="1" end="${5 - rvo.review_star }">&#x02606;</c:forEach>
 											</span>
 
 											<c:forEach var="keyword" items="${rvo.keyList }">

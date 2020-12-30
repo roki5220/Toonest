@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import pj.toon.vo.KeywordVo;
 import pj.toon.vo.ReviewVo;
 import pj.toon.vo.WebtoonVo;
 
@@ -31,7 +32,45 @@ public class WebtoonDao extends DAO {
 	private final String DELETE_REV = "DELETE FROM review WHERE review_no = ?";
 	private final String DELETE_KEY = "DELETE FROM keyword WHERE review_no = ?";
 	private final String SEARCH_REV = "SELECT toon_no FROM review WHERE review_no = ?";
+	private final String INSERT_KEY = "INSERT INTO keyword VALUES(k_seq.nextval, ?, ?, r_seq.currval)";
+	private final String ORDER_KEY = "SELECT * FROM (SELECT k_name, count(*) FROM keyword WHERE toon_no = ? " + 
+			"GROUP BY k_name ORDER BY 2 DESC) where rownum <= 3";
 	
+	
+	
+	public ArrayList<String> getKeywordOrder(int toon_no) {
+		ArrayList<String> keyList = new ArrayList<String>();
+		
+		try {
+			psmt = conn.prepareStatement(ORDER_KEY);
+			psmt.setInt(1, toon_no);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				keyList.add(rs.getString("k_name"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return keyList;
+	}
+	
+	public int insertKeyword(int toon_no, String keyword) {
+		int n = 0;
+		try {
+			psmt = conn.prepareStatement(INSERT_KEY);
+			psmt.setString(1, keyword);
+			psmt.setInt(2, toon_no);
+			
+			n = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return n;
+	}
 	
 	public int deleteReview(int review_no) {
 		int n = 0;
@@ -131,9 +170,6 @@ public class WebtoonDao extends DAO {
 			e.printStackTrace();
 		}
 		
-		for(ReviewVo v: list) {
-			System.out.println(v.getNickname());
-		}
 		return list;
 	}
 	
@@ -181,33 +217,35 @@ public class WebtoonDao extends DAO {
 	}
 	
 	///수정 희원
-//		private final String SELECT_DETAIL = 
-//				"select r.star, w.* from webtoon w, (select round(avg(review_star), 2) star, toon_no from review where toon_no = ? group by toon_no) r where w.toon_no = r.toon_no";
-		private final String SELECT_DETAIL = "SELECT * FROM WEBTOON WHERE TOON_NO = ? ";
-		public WebtoonVo select_detail(WebtoonVo vo) {
-			try {
-				psmt = conn.prepareStatement(SELECT_DETAIL);
-				psmt.setInt(1, vo.getToon_no());
-				rs = psmt.executeQuery();
-				if(rs.next()) {
-					vo = new WebtoonVo();
-					vo.setToon_no(rs.getInt("toon_no"));
-					vo.setToon_name(rs.getString("toon_name"));
-					vo.setToon_writer(rs.getString("toon_writer"));
-					vo.setToon_pic(rs.getString("toon_pic"));
-					vo.setToon_site(rs.getString("toon_site"));
-					vo.setToon_genre(rs.getString("toon_genre"));
-					vo.setToon_link(rs.getString("toon_link"));
-					vo.setToon_view(rs.getInt("toon_view"));
-					vo.setAvg_star(rs.getDouble(1));
-				}
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}finally {
-				close();
+	private final String SELECT_DETAIL = 
+			"SELECT NVL(R.STAR, 0) star, NVL(R.CNT, 0) cnt, W.* " + 
+			"FROM WEBTOON W LEFT OUTER JOIN (SELECT COUNT(*) CNT, ROUND(AVG(REVIEW_STAR), 2) STAR, TOON_NO FROM REVIEW GROUP BY TOON_NO) R " + 
+			"ON w.toon_no=r.toon_no " + 
+			"WHERE w.toon_no = ? " + 
+			"ORDER BY TOON_VIEW DESC";
+	
+	public WebtoonVo select_detail(WebtoonVo vo) {
+		try {
+			psmt = conn.prepareStatement(SELECT_DETAIL);
+			psmt.setInt(1, vo.getToon_no());
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				vo = new WebtoonVo();
+				vo.setToon_no(rs.getInt("toon_no"));
+				vo.setToon_name(rs.getString("toon_name"));
+				vo.setToon_writer(rs.getString("toon_writer"));
+				vo.setToon_pic(rs.getString("toon_pic"));
+				vo.setToon_site(rs.getString("toon_site"));
+				vo.setToon_genre(rs.getString("toon_genre"));
+				vo.setToon_link(rs.getString("toon_link"));
+				vo.setToon_view(rs.getInt("toon_view"));
+				vo.setAvg_star(rs.getDouble(1));
 			}
-			return vo;
+		}catch(SQLException e) {
+			e.printStackTrace();
 		}
+		return vo;
+	}
 		
 		
 		private final String INSERT_REVIEW = 
@@ -226,15 +264,31 @@ public class WebtoonDao extends DAO {
 				
 			}catch (SQLException e) {
 				e.printStackTrace();
-			}finally {
-				close();
 			}
 			
 			return n;
 		}
 		
 	
-	
+		private final String INSERT_KEYWORD = 
+				"INSERT INTO keyword VALUES(k_seq.NEXTVAL, ?, ?, r_seq.currval)"; 
+		
+		public int insert_keyword(KeywordVo vo) {
+			int n = 0;
+			try {
+				psmt = conn.prepareStatement(INSERT_KEYWORD);
+				psmt.setString(1, vo.getK_name());
+				psmt.setInt(2, vo.getToon_no());
+				n = psmt.executeUpdate();
+				
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close();
+			}
+			
+			return n;
+		}
 
 	public int getGenreListCount(HashMap<String, Object> listOpt){
 		int result = 0;
@@ -262,9 +316,9 @@ public class WebtoonDao extends DAO {
 		try {
 			StringBuffer sql = new StringBuffer();
 			sql.append("SELECT b.* FROM ");
-			sql.append("(SELECT rownum rnum, a.* FROM (SELECT * FROM webtoon ORDER BY toon_no) a ");
+			sql.append("(SELECT rownum rnum, a.* FROM (SELECT * FROM webtoon ORDER BY toon_view DESC, toon_name) a ");
 			sql.append("WHERE toon_genre = ?) b ");
-			sql.append("WHERE rnum>=? and rnum<=? ORDER BY toon_no");
+			sql.append("WHERE rnum>=? and rnum<=? ORDER BY toon_view DESC, toon_name");
 
 			psmt = conn.prepareStatement(sql.toString());
 			psmt.setString(1, genreKor);
@@ -375,7 +429,7 @@ where w.toon_no = r.toon_no;
 			psmt.setString(1, "%" + searchBox + "%");
 			psmt.setString(2, "%" + searchBox + "%");
 			psmt.setInt(3, start);
-			psmt.setInt(4, start + 9);
+			psmt.setInt(4, start + 14);
 
 			rs = psmt.executeQuery();
 			while (rs.next()) {
