@@ -25,7 +25,6 @@ public class WebListController extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		WebtoonDao dao = new WebtoonDao();
-		WebtoonVo vo = new WebtoonVo();
 		
 		ArrayList<WebtoonVo> list = dao.selectAll();
 		request.setAttribute("list", list);
