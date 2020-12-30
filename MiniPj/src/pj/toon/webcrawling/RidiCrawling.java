@@ -57,7 +57,7 @@ public class RidiCrawling {
 		Iterator<Element> img = elements.select(".thumbnail.lazyload").iterator();
 		Iterator<Element> link = elements.select("a.title_link.trackable").iterator();
 		
-		while(title.hasNext() && count < 20) {
+		while(title.hasNext() && count < 30) {
 			WebtoonVo vo = new WebtoonVo();
 			vo.setToon_name(title.next().text());
 			vo.setToon_writer(writer.next().text());

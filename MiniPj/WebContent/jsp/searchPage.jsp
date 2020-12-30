@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>TOONEST</title>
 <link href="/MiniPj/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 <link
@@ -23,6 +23,7 @@ strong a {
 .page_wrap {
 	text-align: center;
 	font-size: 0;
+	margin-top: 20px;
 }
 
 #pageForm {
@@ -153,7 +154,30 @@ h4 {
 											<img class="imgTag" src="/MiniPj/images/ridi_logo.png"
 												width="10%">
 										</c:if>
-										${vo.toon_genre }
+										<c:if test="${vo.toon_genre == '일상'}">
+											<a href="GenreListController.do?genre=daily"
+												style="color: black;">${vo.toon_genre }</a>
+										</c:if>
+										<c:if test="${vo.toon_genre == '드라마'}">
+											<a href="GenreListController.do?genre=drama"
+												style="color: black;">${vo.toon_genre }</a>
+										</c:if>
+										<c:if test="${vo.toon_genre == '액션'}">
+											<a href="GenreListController.do?genre=action"
+												style="color: black;">${vo.toon_genre }</a>
+										</c:if>
+										<c:if test="${vo.toon_genre == '판타지'}">
+											<a href="GenreListController.do?genre=fantasy"
+												style="color: black;">${vo.toon_genre }</a>
+										</c:if>
+										<c:if test="${vo.toon_genre == '스릴러'}">
+											<a href="GenreListController.do?genre=thriller"
+												style="color: black;">${vo.toon_genre }</a>
+										</c:if>
+										<c:if test="${vo.toon_genre == '로맨스'}">
+											<a href="GenreListController.do?genre=romance"
+												style="color: black;">${vo.toon_genre }</a>
+										</c:if>
 									</div>
 								</div>
 							</div>

@@ -9,7 +9,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>TooNesT</title>
+<title>TOONEST</title>
 <!-- Bootstrap core CSS -->
 <link href="/MiniPj/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -27,6 +27,13 @@ body {
 a {
   color: #fff;
 }
+.grid-container {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 100px 15px;
+  padding: 10px;
+}
+
 </style>
 </head>
 <body>
@@ -43,7 +50,7 @@ a {
 					</ol>
 					<div class="carousel-inner" role="listbox">
 						<div class="carousel-item active">
-							<a href="/MiniPj/DetailController.do?toon_no=38"> <img
+							<a href="/MiniPj/DetailController.do?toon_no=48"> <img
 								class="d-block img-fluid" src="/MiniPj/images/Getback-1.jpg"
 								alt="First slide"
 								onmouseover="this.src='/MiniPj/images/getback.jpg'"
@@ -51,7 +58,7 @@ a {
 							</a>
 						</div>
 						<div class="carousel-item">
-							<a href="/MiniPj/DetailController.do?toon_no=123"> <img
+							<a href="/MiniPj/DetailController.do?toon_no=188"> <img
 								class="d-block img-fluid" src="/MiniPj/images/chit-1.jpg"
 								alt="Second slide"
 								onmouseover="this.src='/MiniPj/images/chitra.jpg'"
@@ -59,7 +66,7 @@ a {
 							</a>
 						</div>
 						<div class="carousel-item">
-							<a href="/MiniPj/DetailController.do?toon_no=64"> <img
+							<a href="/MiniPj/DetailController.do?toon_no=95"> <img
 								class="d-block img-fluid" src="/MiniPj/images/you-1.jpg"
 								alt="Third slide"
 								onmouseover="this.src='/MiniPj/images/you.jpg'"
@@ -84,8 +91,8 @@ a {
 								<!-- 클릭하면 상세페이지이동 -->
 								<img class="webImg" src="${vo.toon_pic }"
 									onclick="location='/MiniPj/DetailController.do?toon_no=${vo.toon_no}'">
-								<div class="webbody">
-									<h4 class="title">
+								<div class="grid-container">
+									<div><h4 class="title">
 										<a href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}">${vo.toon_name }</a>
 									</h4>
 									<h5 class="writer">${vo.toon_writer }
@@ -99,8 +106,8 @@ a {
 										<c:if test="${vo.toon_site == '리디북스' }">
 											<img src="/MiniPj/images/ridi_logo.png" width="15%">
 										</c:if>
-									</h5>
-									<p style="color: #005e5c;">
+									</h5></div>
+									<div><p style="color: #005e5c;">
 										<c:choose>
 											<c:when test="${vo.review_star == 0 || vo.review_star eq null}">&#x02606;&#x02606;&#x02606;&#x02606;&#x02606;</c:when>
 											<c:when test="${vo.review_star > 0 && vo.review_star <= 1}">&#x02605;&#x02606;&#x02606;&#x02606;&#x02606;</c:when>
@@ -110,7 +117,7 @@ a {
 											<c:when test="${vo.review_star > 4 && vo.review_star == 5}">&#x02605;&#x02605;&#x02605;&#x02605;&#x02605;</c:when>
 										</c:choose>
 										(${vo.count_review })
-									</p>
+									</p></div>
 								</div>
 							</div>
 						</div>

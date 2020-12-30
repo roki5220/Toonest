@@ -19,7 +19,7 @@ public class WebtoonDao extends DAO {
 //	private final String SEARCH = "SELECT toon_name, toon_writer, toon_pic, toon_site, toon_genre FROM webtoon WHERE toon_name like ? OR toon_writer like ?";
 	private final String SEARCH = "SELECT toon_name, toon_writer, toon_pic, toon_site, toon_genre FROM webtoon WHERE toon_name like ?";
 	private final String INSERT = "INSERT INTO webtoon VALUES(toon_seq.nextval, ?, ?, ?, ?, 0, 0, ?, 0, ?)";
-	private final String COUNT = "SELECT COUNT(*) FROM webtoon WHERE toon_name like ? or toon_writer like ?";
+	private final String COUNT = "SELECT COUNT(*) FROM webtoon WHERE upper(toon_name) like upper(?) or upper(toon_writer) like upper(?)";
 	private final String GENRE_CNT = "SELECT COUNT(*) FROM webtoon WHERE toon_genre = ?";
 	private final String SELECT_ALL = "SELECT NVL(R.STAR, 0) avgstar, NVL(R.CNT, 0) creview, W.*\n"
 			+ "FROM WEBTOON W LEFT OUTER JOIN (SELECT COUNT(*) CNT, ROUND(AVG(REVIEW_STAR), 2) STAR, TOON_NO FROM REVIEW GROUP BY TOON_NO) R\n"
@@ -421,9 +421,9 @@ where w.toon_no = r.toon_no;
 		try {
 			StringBuffer sql = new StringBuffer();
 			sql.append("SELECT toon_name, toon_writer, toon_pic, toon_site, toon_genre, toon_no FROM");
-			sql.append("(SELECT rownum rnum, a.* FROM (SELECT * FROM webtoon ORDER BY toon_no) a ");
-			sql.append("WHERE toon_name LIKE ? OR toon_writer LIKE ?) ");
-			sql.append("WHERE rnum>=? and rnum<=? ORDER BY toon_no");
+			sql.append("(SELECT rownum rnum, a.* FROM (SELECT * FROM webtoon ORDER BY toon_name) a ");
+			sql.append("WHERE upper(toon_name) LIKE upper(?) OR upper(toon_writer) LIKE upper(?)) ");
+			sql.append("WHERE rnum>=? and rnum<=? ORDER BY toon_name");
 
 			psmt = conn.prepareStatement(sql.toString());
 			psmt.setString(1, "%" + searchBox + "%");

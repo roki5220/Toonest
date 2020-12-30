@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>TOONEST</title>
 <link href="/MiniPj/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 <link
@@ -109,52 +109,53 @@ h4 {
 .imgTag {
 	vertical-align: bottom;
 }
-
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-$(function(){
-	function getParameterByName(name) {
-	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-	        results = regex.exec(location.search);
-	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-	}
-	
-	var genre = getParameterByName('genre');
-	if(genre == 'daily'){
-		$('.g-daily').css({
-			"text-decoration": "underline",
-			"font-weight": "bold"
-		});
-	} else if(genre == 'drama'){
-		$('.g-drama').css({
-			"text-decoration": "underline",
-			"font-weight": "bold"
-		});
-	} else if(genre == 'action'){
-		$('.g-action').css({
-			"text-decoration": "underline",
-			"font-weight": "bold"
-		});
-	} else if(genre == 'fantasy'){
-		$('.g-fantasy').css({
-			"text-decoration": "underline",
-			"font-weight": "bold"
-		});
-	} else if(genre == 'thriller'){
-		$('.g-thriller').css({
-			"text-decoration": "underline",
-			"font-weight": "bold"
-		});
-	} else if(genre == 'romance'){
-		$('.g-romance').css({
-			"color": "#005e5c",
-			"text-decoration": "underline",
-			"font-weight": "bold"
-		});
-	}
-});
+	$(function() {
+		function getParameterByName(name) {
+			name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+			var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex
+					.exec(location.search);
+			return results === null ? "" : decodeURIComponent(results[1]
+					.replace(/\+/g, " "));
+		}
+
+		var genre = getParameterByName('genre');
+		if (genre == 'daily') {
+			$('.g-daily').css({
+				"text-decoration" : "underline",
+				"font-weight" : "bold"
+			});
+		} else if (genre == 'drama') {
+			$('.g-drama').css({
+				"text-decoration" : "underline",
+				"font-weight" : "bold"
+			});
+		} else if (genre == 'action') {
+			$('.g-action').css({
+				"text-decoration" : "underline",
+				"font-weight" : "bold"
+			});
+		} else if (genre == 'fantasy') {
+			$('.g-fantasy').css({
+				"text-decoration" : "underline",
+				"font-weight" : "bold"
+			});
+		} else if (genre == 'thriller') {
+			$('.g-thriller').css({
+				"text-decoration" : "underline",
+				"font-weight" : "bold"
+			});
+		} else if (genre == 'romance') {
+			$('.g-romance').css({
+				"color" : "#005e5c",
+				"text-decoration" : "underline",
+				"font-weight" : "bold"
+			});
+		}
+	});
 </script>
 </head>
 <body>
@@ -162,18 +163,20 @@ $(function(){
 	<jsp:include page="header.jsp" />
 
 	<div class="container">
-		<br>
-		<br>
+		<br> <br>
 		<div class="searchList">
 			<div class="row">
 				<c:forEach var="vo" items="${list }">
 					<div class="col-lg-4">
 						<div class="toonEach">
-							<a href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}" class="thumb_link"> <img
-								src="${vo.toon_pic}" width="110" class="img_thumb">
+							<a href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}"
+								class="thumb_link"> <img src="${vo.toon_pic}" width="110"
+								class="img_thumb">
 							</a>
 							<div class="toonInfo" style="display: inline-block; width: 60%;">
-								<strong class="title"> <a href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}" class="title_link">${vo.toon_name }</a>
+								<strong class="title"> <a
+									href="/MiniPj/DetailController.do?toon_no=${vo.toon_no}"
+									class="title_link">${vo.toon_name }</a>
 								</strong>
 								<p></p>
 								<div>

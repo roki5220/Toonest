@@ -16,7 +16,7 @@
 	rel="stylesheet"
 	integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
 	crossorigin="anonymous">
-<title>Blog Template Â· Bootstrap v5.0</title>
+<title>TOONEST</title>
 
 <link rel="canonical"
 	href="https://getbootstrap.com/docs/5.0/examples/blog/">

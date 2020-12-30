@@ -138,7 +138,7 @@
 }
 </style>
 
-<title>Insert title here</title>
+<title>TOONEST</title>
 
 <script>
 	var maxChecked = 3; //선택가능한 체크박스 갯수
@@ -242,7 +242,7 @@
 							<div>
 								<input placeholder="  닉네임을 적어주세요" size="20"
 									style="border: 1px solid #e5e5e5; height: 40px; border-radius: 5px; margin: 0px 10px 15px 1px;"
-									type="text" name="nick_name" id="nick_name" maxlength="10"> <input
+									type="text" name="nick_name" id="nick_name" maxlength="10" required> <input
 									placeholder="  비밀번호를 입력해주세요" size="20"
 									style="border: 1px solid #e5e5e5; height: 40px; border-radius: 5px;"
 									type="password" name="password" id="password" maxlength="15" required>

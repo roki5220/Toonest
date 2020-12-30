@@ -60,9 +60,9 @@ public class NaverCrawling {
 		Iterator<Element> title = elements.select(".thumb a").iterator();
 		Iterator<Element> link = elements.select("dt a").iterator();
 		Iterator<Element> writer = elements.select("dd.desc").iterator();
-		Iterator<Element> img = elements.select(".thumb img[src$=jpg]").iterator();
+		Iterator<Element> img = elements.select(".thumb img[onerror]").iterator();
 		
-		while (title.hasNext() && count <= 20) {
+		while (title.hasNext() && count <= 30) {
 			WebtoonVo vo = new WebtoonVo();
 			vo.setToon_name(title.next().attr("title"));
 			vo.setToon_writer(writer.next().text());

@@ -45,7 +45,7 @@ public class KakaoCrawling {
 		// 드라마 116, 로맨스 121, 액션 112, 소년 115(거의 판타지), 로판 69 => 뭐를 판타지로 넣지..?
 		String url = "https://page.kakao.com/theme/list?themeId="+genre;
 		Document doc = null;
-		int count = 20;
+		int count = 30;
 		// Document에 페이지의 전체 소스 저장
 		try {
 			doc = Jsoup.connect(url).get();
@@ -68,7 +68,7 @@ public class KakaoCrawling {
 			obj = (JSONObject) parser.parse(str);
 			str = (String) obj.get("seriesList").toString();
 			JSONArray arr = (JSONArray) parser.parse(str);
-			if(arr.size() < 20) {
+			if(arr.size() < 30) {
 				count = arr.size();
 			}
 			for(int i = 0; i < count; i++) {
