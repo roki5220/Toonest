@@ -429,8 +429,7 @@
 										</div>
 										<div>
 											<span class="starspan" style="color: #005e5c; width: 90px;"><c:forEach
-													begin="1" end="${rvo.review_star}">&#x02605;</c:forEach>
-												<c:forEach begin="1" end="${5 - rvo.review_star }">&#x02606;</c:forEach>
+													begin="1" end="${rvo.review_star}">&#x02605;</c:forEach><c:forEach begin="1" end="${5 - rvo.review_star }">&#x02606;</c:forEach>
 											</span>
 
 											<c:forEach var="keyword" items="${rvo.keyList }">
