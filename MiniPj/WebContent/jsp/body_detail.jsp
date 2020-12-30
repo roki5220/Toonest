@@ -421,7 +421,7 @@
 											<img class="userimage" src="images/user_edit.png"
 												style="width: 20px; vertical-align: middle; color:#4a4a4a">
 											${rvo.nickname } <img src="images/delete.png"
-												onclick="deleteReview(${rvo.password }, ${rvo.review_no })"
+												onclick="deleteReview('${rvo.password }', ${rvo.review_no })"
 												style="width: 20px; cursor: pointer; float: right">
 										</div>
 										<div>
